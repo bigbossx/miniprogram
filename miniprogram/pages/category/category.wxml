@@ -1,2 +1,13 @@
 <!--miniprogram/pages/category/category.wxml-->
-<text>miniprogram/pages/category/category.wxml</text>
+<view class="category__container">
+  <view class="category__father">
+    <view class='category__item_father {{seletedIndex==index?"active":"background"}}' wx:for="{{menu}}" wx:key="{{index}}" bindtap='changeTab' data-index="{{index}}">
+      <text>{{item.mainTitle}}</text>
+    </view>
+  </view>
+  <view class="category__sub_box">
+    <view class='category__item_sub' wx:for="{{seletedSub}}" wx:key="index" bindtap='handleClickMenu' data-value="{{item}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+</view>

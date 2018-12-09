@@ -6,12 +6,12 @@
 <i-panel title="添加图片(最多六张)" hide-border="true">
   <i-cell-group>
     <i-cell>
-      <view class="weui-uploader__file uploader__img_box" wx:for="{{selectedImages}}" wx:for-index="idx" wx:key="idx">
-        <image class="weui-uploader__img " src="{{item}}" bindtap='previewImage' data-currenturl="{{item}}" mode="scaleToFill" />
-        <i-icon type="delete" size="28" color="#c6cace" class='close-btn' bindtap='deleteHandle' data-index='index' />
-      </view>
       <view class="weui-uploader__input-box" wx:if="{{selectedImages.length<6}}">
         <view class="weui-uploader__input" bindtap="chooseImage"></view>
+      </view>
+      <view class="weui-uploader__file uploader__img_box" wx:for="{{selectedImages}}" wx:for-index="idx" wx:key="idx">
+        <image class="weui-uploader__img " src="{{item}}" bindtap='previewImage' data-currenturl="{{item}}" mode="scaleToFill" />
+        <i-icon type="delete" size="28" color="#8c8c8c" class='close-btn' bindtap='deleteHandle' data-index='index' />
       </view>
     </i-cell>
   </i-cell-group>
@@ -19,12 +19,12 @@
 <i-cell-group>
   <i-cell title="是否全新">
     <i-switch value="{{isNew}}" size="large" bind:change="onChangeSwitch" slot="footer">
-      <i-icon type="right" slot="open"></i-icon>
-      <i-icon type="close" slot="close"></i-icon>
+      <view slot="open">是</view>
+      <view slot="close">否</view>
     </i-switch>
   </i-cell>
 </i-cell-group>
 <i-cell-group>
-  <i-cell title="分类" is-link url="/pages/category/category" value="{{category}}"></i-cell>
+  <i-cell title="分类" is-link url="/pages/category/category" value="{{category|| '选择分类'}}"></i-cell>
 </i-cell-group>
 <i-button type="primary" bind:click="handleNextSubmit" type="error" shape="circle" size="small">下一步 上架闲品</i-button>

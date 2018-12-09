@@ -1,1 +1,35 @@
 /* miniprogram/pages/category/category.wxss */
+
+.category__container {
+  width: "100%";
+  display: flex;
+  justify-content: flex-start;
+}
+
+.category__father {
+  display: flex;
+  width: "40%";
+  flex-direction: column;
+}
+
+.category__sub_box {
+  display: flex;
+  width: "60%";
+  flex-direction: column;
+}
+
+.background {
+  background: #f8f8f8;
+}
+
+.active {
+  background: #fff;
+}
+
+.category__item_father {
+  padding: 20rpx 60rpx;
+  border-bottom: 1rpx solid #ebebeb;
+}
+.category__item_sub {
+  padding: 20rpx 60rpx;
+}

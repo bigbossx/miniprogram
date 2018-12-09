@@ -1,4 +1,5 @@
 // miniprogram/pages/publish/publish.js
+const app = getApp()
 Page({
 
   /**
@@ -8,7 +9,7 @@ Page({
     isNew: false,
     name: "",
     description: "",
-    category: "选择分类",
+    category: "",
     selectedImages: [],
   },
 
@@ -30,7 +31,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.setData({
+      category: app.globalData.categorySelectedValue || ""
+    })
   },
 
   /**
@@ -81,11 +84,6 @@ Page({
     const detail = event.detail;
     this.setData({
       'isNew': detail.value
-    })
-  },
-  handleNextSubmit(){
-    wx.showLoading({
-      title: `${this.data.name}-${this.data.description}`,
     })
   },
   chooseImage() {
@@ -160,5 +158,36 @@ Page({
     this.setData({
       selectedImages: this.data.selectedImages
     })
+  },
+  handleNextSubmit() {
+    if (!this.data.name) {
+      wx.showToast({
+        icon: "none",
+        title: '请输入物品名称',
+      })
+      return false
+    }
+    if (!this.data.description) {
+      wx.showToast({
+        icon: "none",
+        title: '请输入物品描述',
+      })
+      return false
+    }
+    if (!this.data.category) {
+      wx.showToast({
+        icon: "none",
+        title: '请选择分类',
+      })
+      return false
+    }
+    if (!this.data.selectedImages.length > 0) {
+      wx.showToast({
+        icon: "none",
+        title: '请添加图片',
+      })
+      return false
+    }
+    console.log( `${this.data.name}-${this.data.description}-${this.data.category}-${this.data.isNew}` )
   }
 })

@@ -2,6 +2,7 @@
 .uploader__img_box{
   position: relative;
   z-index: 9;
+  margin-left: 10rpx;
 }
 .close-btn {
   position: absolute;
