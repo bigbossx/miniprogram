@@ -1,0 +1,12 @@
+/* miniprogram/pages/publish/publish.wxss */
+.uploader__img_box{
+  position: relative;
+  z-index: 9;
+}
+.close-btn {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  transform: translate(50%,-50%)
+}

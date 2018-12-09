@@ -5,3 +5,4 @@
   align-items: center;
   box-sizing: border-box;
 } 
+@import "style/weui.wxss"
