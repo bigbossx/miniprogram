@@ -20,12 +20,37 @@ Page({
   },
 
   onLoad: function() {
+    console.log(app)
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
       })
       return
     }
+    wx.checkSession({
+      success() {
+        console.log("has login")
+        //session_key 未过期，并且在本生命周期一直有效
+      },
+      fail() {
+        // session_key 已经失效，需要重新执行登录流程
+        wx.login({
+          success(res) {
+            if (res.code) {
+              //发起网络请求
+              wx.request({
+                url: 'https://test.com/onLogin',
+                data: {
+                  code: res.code
+                }
+              })
+            } else {
+              console.log('登录失败！' + res.errMsg)
+            }
+          }
+        })
+      }
+    })
 
     // 获取用户信息
     wx.getSetting({

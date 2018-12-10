@@ -9,7 +9,9 @@
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
     "pages/publish/publish",
-    "pages/category/category"
+    "pages/category/category",
+    "pages/publishDetail/publishDetail",
+    "pages/address/address"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

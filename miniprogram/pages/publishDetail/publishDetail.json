@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "上架闲品",
+  "usingComponents": {
+    "i-button": "./../../iview/dist/button/index",
+    "i-input": "./../../iview/dist/input/index",
+    "i-panel": "./../../iview/dist/panel/index",
+    "i-cell": "./../../iview/dist/cell/index",
+    "i-cell-group": "./../../iview/dist/cell-group/index",
+    "i-icon": "./../../iview/dist/icon/index",
+    "i-tag": "./../../iview/dist/tag/index",
+    "i-checkbox-group": "./../../iview/dist/checkbox-group/index",
+    "i-checkbox": "./../../iview/dist/checkbox/index",
+    "i-action-sheet": "./../../iview/dist/action-sheet/index"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "选择地址",
+  "usingComponents": {
+    "i-button": "./../../iview/dist/button/index",
+    "i-input": "./../../iview/dist/input/index",
+    "i-panel": "./../../iview/dist/panel/index",
+    "i-switch": "./../../iview/dist/switch/index",
+    "i-cell": "./../../iview/dist/cell/index",
+    "i-cell-group": "./../../iview/dist/cell-group/index",
+    "i-icon": "./../../iview/dist/icon/index"
+  }
+}
