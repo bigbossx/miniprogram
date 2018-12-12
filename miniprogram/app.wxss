@@ -8,4 +8,11 @@
 .cell-panel {
   margin-top: 10rpx;
 }
+.footer__btn {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
 @import "style/weui.wxss"

@@ -1,5 +1,5 @@
 // miniprogram/pages/publish/publish.js
-const CloudFunc=require("./../../cloudDatabase/addGoods.js")
+const CloudFunc=require("./../../cloudDatabase/addDatas.js")
 const app = getApp()
 Page({
 

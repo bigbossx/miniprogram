@@ -10,7 +10,7 @@
           checkable="{{true}}" 
           name="{{index}}" 
           color="{{item.color}}" 
-          checked="{{item.checked}}" 
+          checked="{{item.tagIndex==transactionTypeTagsIndex}}" 
           type="border"
           style="margin-right:10rpx;">
           {{item.name}}

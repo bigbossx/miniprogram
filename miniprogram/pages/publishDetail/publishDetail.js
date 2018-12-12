@@ -1,6 +1,5 @@
 // miniprogram/pages/publishDetail/publishDetail.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -18,14 +17,15 @@ Page({
     ],
     money: "",
     weight: "1kg以下",
+    transactionTypeTagsIndex:0,
     transactionTypeTags: [{
         name: '一口价',
-        checked: true,
+        tagIndex: 0,
         color: 'theme'
       },
       {
         name: '拍卖',
-        checked: false,
+        tagIndex: 1,
         color: 'theme'
       }
     ],
@@ -105,8 +105,9 @@ Page({
   },
   onChangeTransactionType(event) {
     const detail = event.detail;
+    console.log(event.detail)
     this.setData({
-      ['transactionTypeTags[' + event.detail.name + '].checked']: detail.checked
+      transactionTypeTagsIndex: event.detail.name,
     })
   },
   onChangeShippingMethods(event) {

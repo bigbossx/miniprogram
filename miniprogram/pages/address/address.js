@@ -1,4 +1,6 @@
 // miniprogram/pages/address/address.js
+const CloudFunc = require("./../../cloudDatabase/addDatas.js")
+const app = getApp()
 Page({
 
   /**
@@ -86,7 +88,22 @@ Page({
       region: e.detail.value
     })
   },
-  saveAddress(){
-
+  saveAddress() {
+    const data = {
+      receiver: this.data.receiver,
+      telephone: this.data.telephone,
+      addressDetail: this.data.addressDetail,
+      region: this.data.region
+    }
+    CloudFunc.addUsers(data).then((res) => {
+      wx.showToast({
+        title: '保存地址成功',
+      })
+    }).catch((err)=>{
+      wx.showToast({
+        icon: 'none',
+        title: '保存地址失败'
+      })
+    })
   }
 })
