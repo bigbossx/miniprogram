@@ -1,9 +1,13 @@
 // miniprogram/pages/publishDetail/publishDetail.js
+const CloudFunc = require("./../../cloudDatabase/operateDatas.js")
+import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    id: "",
     visibleActions: false,
     weightActions: [{
         name: '1kg以下',
@@ -17,7 +21,7 @@ Page({
     ],
     money: "",
     weight: "1kg以下",
-    transactionTypeTagsIndex:0,
+    transactionTypeTagsIndex: 0,
     transactionTypeTags: [{
         name: '一口价',
         tagIndex: 0,
@@ -40,13 +44,17 @@ Page({
         color: 'theme'
       }
     ],
+    address: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log(options)
+    this.setData({
+      id: options.id || ""
+    })
   },
 
   /**
@@ -60,7 +68,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    console.log(app.globalData)
+    this.setData({
+      address: app.globalData.address || ""
+    })
   },
 
   /**
@@ -97,7 +108,7 @@ Page({
   onShareAppMessage: function() {
 
   },
-  handleMoneyChange(event){
+  handleMoneyChange(event) {
     console.log(event)
     this.setData({
       money: event.detail.detail.value
@@ -105,7 +116,6 @@ Page({
   },
   onChangeTransactionType(event) {
     const detail = event.detail;
-    console.log(event.detail)
     this.setData({
       transactionTypeTagsIndex: event.detail.name,
     })
@@ -127,11 +137,39 @@ Page({
       visibleActions: false
     });
   },
-  handleClickItem({detail}) {
+  handleClickItem({
+    detail
+  }) {
     const index = detail.index;
     this.setData({
-      weight:this.data.weightActions[index].name,
+      weight: this.data.weightActions[index].name,
       visibleActions: false
     })
   },
+  async handlePublish() {
+    //上架商品
+    let where = {
+      id: this.data.id
+    }
+    let data = {
+      weight: this.data.weight,
+      address: this.data.address,
+      money: this.data.money,
+      transactionType: this.data.transactionTypeTags[this.data.transactionTypeTagsIndex].name,
+      shippingMethods: this.data.shippingMethodsTags.filter(item => item.checked)
+    }
+    await CloudFunc.updateGoods(where, data).then((res)=>{
+      console.log(res)
+      wx.showToast({
+        title: '发布成功',
+      })
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }).catch((err)=>{
+      wx.showToast({
+        title: `error${err}`,
+      })
+    })  
+  }
 })

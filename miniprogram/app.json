@@ -11,7 +11,10 @@
     "pages/publish/publish",
     "pages/category/category",
     "pages/publishDetail/publishDetail",
-    "pages/address/address"
+    "pages/address/address",
+    "pages/login/login",
+    "pages/goodsDetail/goodsDetail",
+    "pages/profile/profile"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -35,7 +38,7 @@
         "selectedIconPath": "images/miniProgramLogo.png"
       },
       {
-        "pagePath": "pages/databaseGuide/databaseGuide",
+        "pagePath": "pages/profile/profile",
         "text": "我的",
         "iconPath": "images/user.png",
         "selectedIconPath": "images/user-active.png"

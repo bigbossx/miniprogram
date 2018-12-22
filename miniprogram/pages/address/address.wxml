@@ -1,41 +1,58 @@
 <!--miniprogram/pages/address/address.wxml-->
-<view class="modal-container">
+<view style='padding-bottom:120rpx'>
+  <view style='margin-top:20rpx;' wx:for="{{addressDatas}}" wx:key="{{index}}">
+    <i-card title="{{item.receiver}}" extra="{{item.isDefault?'默认':''}}" data-item="{{item}}" data-index="{{index}}" bindtap='handleSelectAddress'>
+      <view slot="content">{{item.region[0]}}{{item.region[1]}}{{item.region[2]}}{{item.addressDetail}}</view>
+      <view slot="footer">
+        <view class="flex-between">
+          <text class='flex-3'>{{item.telephone}}</text>
+          <view class='flex-1 flex-around'>
+            <i-icon type="brush_fill" size="20" color="#ff9900" data-id="{{item.timestamp}}" data-item='{{item}}' catchtap='handleEditAddress'/>
+            <i-icon type="trash_fill" size="20" color="red" data-id="{{item.timestamp}}" catchtap='deleteAddressConfirm'/>
+          </view>
+        </view>
+        <view class='flex-center'>
+          <i-icon type="success_fill" size="28" color="#ed3f14" wx:if="{{selectedAddressIndex==index}}" />
+        </view>
+      </view>
+    </i-card>
+  </view>
+</view>
+<view class="overlay" wx:if="{{addAddressModalShow}}">
+</view>
+<i-modal title="删除确认" visible="{{ deteleCofirmShow }}" actions="{{ actions }}" bind:click="handleClickConfirm">
+    <view>删除后无法恢复哦</view>
+</i-modal>
+<view class="footer__btn">
+  <i-button wx:if="{{!addAddressModalShow}}" shape="circle" type="error" size="small" bind:click="handleShowAddModal">新增地址</i-button>
+</view>
+<view class="modal-container" wx:if="{{addAddressModalShow}}">
+  <i-icon i-class="x__button_close" type="delete" size="30" color="#000" bindtap='handleModalClose' />
+  <i-panel title="{{modalTitle}}">
+  </i-panel>
   <i-panel title="">
     <i-input value="{{ receiver }}" title="收货人" placeholder="姓名" bind:change='handleReceiverChange' />
   </i-panel>
   <i-panel title="">
-    <i-input value="{{ telephone }}" type='number' title="手机号" placeholder="手机号或电话号码" bind:change='handleTelephoneChange'/>
+    <i-input value="{{ telephone }}" type='number' title="手机号" placeholder="手机号或电话号码" bind:change='handleTelephoneChange' />
   </i-panel>
-  
+
   <i-panel title="" class="cell-panel">
     <i-cell-group>
       <i-cell title="选择地区">
         <picker slot="footer" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
-    <view class="picker">
-     {{region[0]}} {{region[1]}} {{region[2]}}
-    </view>
-  </picker>
+          <view class="picker">
+            {{region[0]}} {{region[1]}} {{region[2]}}
+          </view>
+        </picker>
       </i-cell>
     </i-cell-group>
   </i-panel>
 
   <i-panel title="" class="cell-panel">
-    <i-input value="{{ addressDetail }}" type='textarea' title="详细地址" placeholder="具体到街道门牌号" bind:change='handleAddressDetailChange'/>
+    <i-input value="{{ addressDetail }}" type='textarea' title="详细地址" placeholder="具体到街道门牌号" bind:change='handleAddressDetailChange' />
   </i-panel>
 
-  <i-button class="footer__btn"
-   wx:if="{{!receiver||!telephone||!addressDetail}}"
-   type="primary"
-   disabled
-   shape="circle"
-   size="small"
-  >保存地址</i-button>
-  <i-button class="footer__btn"
-   wx:else
-   type="primary"
-   bind:click='saveAddress'
-   type="error"
-   shape="circle"
-   size="small"
-  >保存地址</i-button>
+  <i-button class="footer__btn" wx:if="{{!receiver||!telephone||!addressDetail}}" type="primary" disabled shape="circle" size="small">保存地址</i-button>
+  <i-button class="footer__btn" wx:else type="primary" bind:click='saveAddress' type="error" shape="circle" size="small">保存地址</i-button>
 </view>

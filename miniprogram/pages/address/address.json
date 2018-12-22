@@ -7,6 +7,8 @@
     "i-switch": "./../../iview/dist/switch/index",
     "i-cell": "./../../iview/dist/cell/index",
     "i-cell-group": "./../../iview/dist/cell-group/index",
-    "i-icon": "./../../iview/dist/icon/index"
+    "i-icon": "./../../iview/dist/icon/index",
+    "i-card": "../../iview/dist/card/index",
+    "i-modal": "../../iview/dist/modal/index"
   }
 }

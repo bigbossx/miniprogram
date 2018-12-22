@@ -1,0 +1,20 @@
+<!--miniprogram/pages/profile/profile.wxml-->
+<i-panel title="">
+  <i-card full title="{{userInfo.nickName||'用户名'}}" extra="查看个人主页" thumb="{{userInfo.avatarUrl||'https://i.loli.net/2017/08/21/599a521472424.jpg'}}" i-class="card-demo">
+  <i-button wx:if="{{!userInfo.avatarUrl}}" bind:click="handleLogin" type="primary" size="small" slot="content">点击登录</i-button>
+    <view slot="footer">尾部内容</view>
+  </i-card>
+</i-panel>
+<i-panel title="" i-class="mt-6">
+  <i-cell-group>
+    <i-cell title="我的收藏" is-link>
+      <i-icon type="collection_fill" slot="icon" />
+    </i-cell>
+    <i-cell title="交易记录" is-link url="/pages/dashboard/index">
+      <i-icon type="time" slot="icon" />
+    </i-cell>
+    <i-cell title="我的足迹" is-link url="/pages/dashboard/index" only-tap-footer>
+      <i-icon type="createtask" slot="icon" />
+    </i-cell>
+  </i-cell-group>
+</i-panel>

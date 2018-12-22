@@ -49,7 +49,7 @@
 </i-panel>
 <i-panel title="">
   <i-cell-group>
-    <i-cell title="选择地址" is-link url="/pages/address/address" value="{{'选择地址'}}"></i-cell>
+    <i-cell title="选择地址" is-link url="/pages/address/address" value="{{address.addressDetail||'选择地址'}}"></i-cell>
   </i-cell-group>
 </i-panel>
 <i-action-sheet visible="{{ visibleActions }}" actions="{{ weightActions }}" show-cancel bind:cancel="handleCancelWeightActions" bind:click="handleClickItem">
@@ -57,4 +57,4 @@
         <text>3kg以上的物品建议选择同城交易哟</text>
     </view>
 </i-action-sheet>
-<i-button class="footer__btn" type="primary" bind:click="" disabled type="error" shape="circle" size="small">确定上架</i-button>
+<i-button class="footer__btn" type="primary" bind:click="handlePublish" disabled="{{!money||!address}}" type="error" shape="circle" size="small">确定上架</i-button>

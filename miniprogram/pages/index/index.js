@@ -1,4 +1,6 @@
 //index.js
+import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
+const CloudFuncGet = require("./../../cloudDatabase/getDatas.js")
 const app = getApp()
 
 Page({
@@ -8,79 +10,91 @@ Page({
       'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
       'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'
     ],
+    grids: [
+      [{
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+      ],
+      [{
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+        {
+          url: "./../login/login",
+          icon: "./../../images/home.png",
+          label: "动植物",
+        },
+      ]
+    ],
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 1000,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
+    goodsData: [],
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    pageSize: 10,
+    page: 1,
   },
 
   onLoad: function() {
-    console.log(app)
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
+    console.log("index load")
+    this.getGoodsData()
+  },
+  onShow:function(){
+    console.log("index show")
+    console.log(app.globalData.openid)
+  },
+  getGoodsData() {
+    CloudFuncGet.queryGoods({
+      dataBase:"xianyu_goods",
+      page: this.data.page,
+      pageSize: this.data.pageSize,
+      where: {
+        status: "published"
+      }
+    }).then((res) => {
+      console.log(res)
+      this.setData({
+        goodsData: res.data,
       })
-      return
-    }
-    wx.checkSession({
-      success() {
-        console.log("has login")
-        //session_key 未过期，并且在本生命周期一直有效
-      },
-      fail() {
-        // session_key 已经失效，需要重新执行登录流程
-        wx.login({
-          success(res) {
-            if (res.code) {
-              //发起网络请求
-              wx.request({
-                url: 'https://test.com/onLogin',
-                data: {
-                  code: res.code
-                }
-              })
-            } else {
-              console.log('登录失败！' + res.errMsg)
-            }
-          }
-        })
-      }
-    })
+    }).catch((e) => {
 
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-            }
-          })
-        }
-      }
     })
   },
-  payHandle() {
-    console.log("asdasd")
-    wx.requestPayment({
-      'timeStamp': '',
-      'nonceStr': '',
-      'package': '',
-      'signType': 'MD5',
-      'paySign': '',
-      'success': function (res) { console.log("suc")},
-      'fail': function (res) { console.log("fail")},
-      'complete': function (res) { console.log("complte")}
-    })
+  onItemPress(event) {
+    console.log(event)
   },
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
@@ -125,9 +139,7 @@ Page({
         wx.showLoading({
           title: '上传中',
         })
-
         const filePath = res.tempFilePaths[0]
-
         // 上传图片
         const timeStamp = new Date().getTime()
         const cloudPath = 'vision-image' + timeStamp + filePath.match(/\.[^.]+?$/)[0]

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "i-card": "./../../iview/dist/card/index",
+    "i-cell-group": "../../iview/dist/cell-group/index",
+    "i-panel": "../../iview/dist/panel/index",
+    "i-cell": "../../iview/dist/cell/index",
+    "i-icon": "./../../iview/dist/icon/index",
+    "i-button": "./../../iview/dist/button/index"
+  }
+}

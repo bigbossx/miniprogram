@@ -1,5 +1,5 @@
 // miniprogram/pages/publish/publish.js
-const CloudFunc=require("./../../cloudDatabase/addDatas.js")
+const CloudFunc = require("./../../cloudDatabase/operateDatas.js")
 const app = getApp()
 Page({
 
@@ -18,7 +18,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(app)
+    app.getUserInfoData().then((res) => {
+      app.globalData = {
+        ...res
+      }
+    })
   },
 
   /**
@@ -161,6 +165,12 @@ Page({
     })
   },
   handleNextSubmit() {
+    if (!app.globalData.userInfo) {
+      wx.navigateTo({
+        url: './../login/login',
+      })
+      return false
+    }
     if (!this.data.name) {
       wx.showToast({
         icon: "none",
@@ -189,30 +199,31 @@ Page({
       })
       return false
     }
-    const data={
+    const data = {
       name: this.data.name,
       description: this.data.description,
       category: this.data.category,
       isNew: this.data.isNew,
-      images:this.data.selectedImages,
-      collection:0,
-      isPublished:false
+      images: this.data.selectedImages,
+      collection: 0,
+      status: "pending",
+      createTime: new Date().getTime()
     }
-    CloudFunc.addGoods(data).then((res)=>{
+    CloudFunc.addGoods(data).then((res) => {
       wx.showToast({
         title: '新增记录成功',
       })
       console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
       wx.navigateTo({
-        url: './../publishDetail/publishDetail',
+        url: `./../publishDetail/publishDetail?id=${encodeURIComponent(res._id)}`,
       })
-    }).catch(()=>{
+    }).catch(() => {
       wx.showToast({
         icon: 'none',
         title: '新增记录失败'
       })
       console.error('[数据库] [新增记录] 失败：', err)
     })
-    console.log( `${this.data.name}-${this.data.description}-${this.data.category}-${this.data.isNew}` )
+    console.log(`${this.data.name}-${this.data.description}-${this.data.category}-${this.data.isNew}`)
   }
 })

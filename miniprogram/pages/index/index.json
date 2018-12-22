@@ -1,1 +1,13 @@
-{}
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "i-grid": "./../../iview/dist/grid/index",
+    "i-grid-item": "./../../iview/dist/grid-item/index",
+    "i-grid-icon": "./../../iview/dist/grid-icon/index",
+    "i-grid-label": "./../../iview/dist/grid-label/index",
+    "i-row": "./../../iview/dist/row/index",
+    "i-col": "./../../iview/dist/col/index",
+    "i-avatar": "./../../iview/dist/avatar/index",
+    "goods-item":"./../../component/goodsItem/goodsItem"
+  }
+}

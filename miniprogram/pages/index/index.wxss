@@ -7,6 +7,36 @@ page {
   justify-content: flex-start;
 }
 
+.x__grid_container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+.x__grid_item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 25%;
+  position: relative;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+
+.goods__list_container {
+  padding: 10rpx 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 24rpx;
+}
+
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
   height: 140rpx;

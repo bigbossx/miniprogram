@@ -1,0 +1,2 @@
+<!--miniprogram/pages/login/login.wxml-->
+<button open-type='getUserInfo' bindgetuserinfo="onGetUserInfo" class="weui-btn" type="primary">点击登录</button>

@@ -1,0 +1,27 @@
+<!--component/goodsItem/goodsItem.wxml-->
+<view class="goods__list_item" data-id="" bindtap='onItemPress'>
+      <view class="list__item_header">
+        <view class="avatar">
+          <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
+          <text class='name'>vision</text>
+        </view>
+        <view class="area">
+          <text>广州市</text>
+        </view>
+      </view>
+      <view class="list__item_content">
+        <image class="item__image" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"></image>
+      </view>
+      <view class="list__item_footer">
+        <view class="item__name">
+          <text>亚瑟士情侣鞋</text>
+        </view>
+        <view class="item__price">
+          <view class="avatar">
+            <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
+            <text class="price">3500元</text>
+          </view>
+          <text class="time">昨天05:10</text>
+        </view>
+      </view>
+    </view>

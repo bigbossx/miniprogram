@@ -1,18 +1,98 @@
 /**app.wxss**/
+
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   box-sizing: border-box;
-} 
+}
+
 .cell-panel {
   margin-top: 10rpx;
 }
+
+.x__button {
+  height: 60rpx !important;
+  line-height: 60rpx !important;
+  margin: 10rpx !important;
+}
+
+.x__button_close {
+  position: absolute;
+  top: 44rpx;
+  right: 10rpx;
+  transform: translate(-50%,-50%);
+  z-index: 100;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.7);
+  transition: all .5s;
+}
+
 .footer__btn {
   width: 100%;
   position: fixed;
   left: 0;
   bottom: 0;
   z-index: 100;
+}
+/* 全局布局 */
+.flex-1{
+  flex: 1
+}
+.flex-2{
+  flex: 2
+}
+.flex-3{
+  flex: 3
+}
+.flex-around{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex-end{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 全局边距 */
+
+.mt-1 {
+  margin-top: 10rpx;
+}
+
+.mt-2 {
+  margin-top: 20rpx;
+}
+
+.mt-4 {
+  margin-top: 40rpx;
+}
+
+.mt-6 {
+  margin-top: 60rpx;
 }
 @import "style/weui.wxss"

@@ -1,0 +1,45 @@
+/* component/goodsItem/goodsItem.wxss */
+.goods__list_item {
+  width: 100%;
+  background: #fff;
+}
+
+.list__item_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 10rpx;
+}
+.item__name{
+  padding:10rpx 0 10rpx 10rpx; 
+  white-space: normal;
+}
+.avatar {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  margin-left: 10rpx;
+}
+
+.list__item_content {
+  width: 100%;
+  height: 300rpx;
+  overflow: hidden;
+}
+
+.item__image {
+  width: 100%;
+  height: 100%;
+}
+
+.area {
+  color: blue;
+}
+.item__price{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx;
+}
