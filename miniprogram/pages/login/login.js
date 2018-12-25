@@ -1,5 +1,6 @@
 // miniprogram/pages/login/login.js
 const CloudFunc = require("./../../cloudDatabase/operateDatas.js")
+const CloudFuncGet = require("./../../cloudDatabase/getDatas.js")
 const app = getApp()
 Page({
 
@@ -76,15 +77,23 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
-        const data={
+        const data = {
           ...app.globalData.userInfo
         }
-        CloudFunc.addUsers(data).then((res) => {
-          wx.showToast({
-            title: '用户信息已经储存',
-          })
-          wx.navigateBack({})
-        }).catch((err) => {
+        CloudFuncGet.queryUser(res.result.openid).then((res) => {
+          if (res.data.length > 0) {
+            wx.showToast({
+              title: '欢迎回归',
+            })
+            wx.navigateBack({})
+          } else {
+            CloudFunc.addUsers(data).then((res) => {
+              wx.showToast({
+                title: '用户信息已经储存',
+              })
+              wx.navigateBack({})
+            }).catch((err) => {})
+          }
         })
       },
       fail: err => {

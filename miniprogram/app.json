@@ -17,11 +17,12 @@
     "pages/profile/profile"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#fdd7e2",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "vision-minprogram",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "list": [
@@ -34,7 +35,6 @@
       {
         "pagePath": "pages/publish/publish",
         "iconPath": "images/miniProgramLogo.png",
-        "text": "发布",
         "selectedIconPath": "images/miniProgramLogo.png"
       },
       {

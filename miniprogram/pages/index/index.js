@@ -5,175 +5,175 @@ const app = getApp()
 
 Page({
   data: {
+    showSkeleton: true,
     imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'
+      'https://sr.aihuishou.com/sos/image/636782499370538790522990215.jpg?x-oss-process=image/quality,q_80&size=694x240',
+      'https://sr.aihuishou.com/sos/image/6368092437329051601479400495.png?x-oss-process=image/quality,q_80&size=694x240'
     ],
     grids: [
       [{
           url: "./../login/login",
-          icon: "./../../images/home.png",
+          icon: "./../../images/animals.png",
           label: "动植物",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/digital.png",
+          label: "数码极客",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/makeups.png",
+          label: "穿搭美妆",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/mother_baby.png",
+          label: "母婴用品",
         },
       ],
       [{
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/entertainment.png",
+          label: "生活娱乐",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/learn.png",
+          label: "学习办公",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/sport.png",
+          label: "运动户外",
         },
         {
           url: "./../login/login",
-          icon: "./../../images/home.png",
-          label: "动植物",
+          icon: "./../../images/all.png",
+          label: "全部",
         },
       ]
     ],
     indicatorDots: true,
     autoplay: true,
-    interval: 5000,
+    interval: 3000,
     duration: 1000,
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
     goodsData: [],
-    logged: false,
-    takeSession: false,
     requestResult: '',
-    pageSize: 10,
+    pageSize: 2,
     page: 1,
+    total: 0,
+    totalPage: 0,
+    showLoadMore: false
   },
 
-  onLoad: function() {
-    console.log("index load")
-    this.getGoodsData()
+  onLoad: async function() {
+    try {
+      console.log("index load")
+      wx.showLoading({
+        title: '加载中',
+      })
+      let res = await this.getGoodsData()
+      await this.setData({
+        goodsData: res.data,
+        total: res.total,
+        totalPage: res.totalPage,
+        showSkeleton: false
+      })
+      wx.hideLoading()
+    } catch (e) {
+      wx.showToast({
+        title: `首页数据加载异常${e}`,
+      })
+    }
   },
-  onShow:function(){
+  onShow: function() {
     console.log("index show")
-    console.log(app.globalData.openid)
   },
   getGoodsData() {
-    CloudFuncGet.queryGoods({
-      dataBase:"xianyu_goods",
-      page: this.data.page,
-      pageSize: this.data.pageSize,
-      where: {
-        status: "published"
-      }
-    }).then((res) => {
-      console.log(res)
-      this.setData({
-        goodsData: res.data,
+    return new Promise((resolve, reject) => {
+      CloudFuncGet.queryGoods({
+        dataBase: "xianyu_goods",
+        page: this.data.page,
+        pageSize: this.data.pageSize,
+        where: {
+          status: "published"
+        }
+      }).then((res) => {
+        console.log(res)
+        resolve(res)
+      }).catch((e) => {
+        reject(e)
       })
-    }).catch((e) => {
-
     })
+  },
+  async onPullDownRefresh() {
+    try {
+      wx.showNavigationBarLoading()
+      await this.getGoodsData()
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+    } catch (e) {
+      wx.showToast({
+        title: `下拉刷新异常${e}`,
+      })
+    }
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: async function() {
+    try {
+      if(this.data.totalPage>this.data.page){
+        await this.setData({
+          showLoadMore: true,
+          page: this.data.page + 1
+        })
+        let res = await this.getGoodsData()
+        if (res.errMsg === "collection.get:ok") {
+          this.setData({
+            goodsData: this.data.goodsData.concat(res.data),
+            showLoadMore: false
+          })
+        }
+      }
+    } catch (e) {
+      wx.showToast({
+        title: `上拉加载异常${e}`,
+      })
+    }
   },
   onItemPress(event) {
     console.log(event)
   },
-  onGetUserInfo: function(e) {
-    if (!this.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
-      })
-    }
-  },
-
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
-      }
-    })
-  },
-
-  // 上传图片
-  doUpload: function() {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function(res) {
-        console.log(res)
-        wx.showLoading({
-          title: '上传中',
-        })
-        const filePath = res.tempFilePaths[0]
-        // 上传图片
-        const timeStamp = new Date().getTime()
-        const cloudPath = 'vision-image' + timeStamp + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-            console.log('[上传文件] 成功：', filePath)
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
-  },
+  // onGetUserInfo: function(e) {
+  //   if (!this.logged && e.detail.userInfo) {
+  //     this.setData({
+  //       logged: true,
+  //       avatarUrl: e.detail.userInfo.avatarUrl,
+  //       userInfo: e.detail.userInfo
+  //     })
+  //   }
+  // },
+  // onGetOpenid: function() {
+  //   // 调用云函数
+  //   wx.cloud.callFunction({
+  //     name: 'login',
+  //     data: {},
+  //     success: res => {
+  //       console.log('[云函数] [login] user openid: ', res.result.openid)
+  //       app.globalData.openid = res.result.openid
+  //       wx.navigateTo({
+  //         url: '../userConsole/userConsole',
+  //       })
+  //     },
+  //     fail: err => {
+  //       console.error('[云函数] [login] 调用失败', err)
+  //       wx.navigateTo({
+  //         url: '../deployFunctions/deployFunctions',
+  //       })
+  //     }
+  //   })
+  // },
 
 })

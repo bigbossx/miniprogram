@@ -8,6 +8,8 @@
     "i-row": "./../../iview/dist/row/index",
     "i-col": "./../../iview/dist/col/index",
     "i-avatar": "./../../iview/dist/avatar/index",
-    "goods-item":"./../../component/goodsItem/goodsItem"
+    "goods-item":"./../../component/goodsItem/goodsItem",
+    "skeleton": "./../../component/skeleton/skeleton",
+    "i-load-more": "./../../iview/dist/load-more/index"
   }
 }

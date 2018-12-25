@@ -120,7 +120,7 @@ Page({
       return this.uploadPromise(cloudPath, item).then((res) => {
         console.log('[上传文件] 成功：')
         this.setData({
-          selectedImages: this.data.selectedImages.concat(item)
+          selectedImages: this.data.selectedImages.concat(res.fileID)
         })
       }).catch(e => {
         console.error('[上传文件] 失败：', e)
@@ -207,7 +207,8 @@ Page({
       images: this.data.selectedImages,
       collection: 0,
       status: "pending",
-      createTime: new Date().getTime()
+      createTime: new Date().getTime(),
+      ...app.globalData.userInfo
     }
     CloudFunc.addGoods(data).then((res) => {
       wx.showToast({

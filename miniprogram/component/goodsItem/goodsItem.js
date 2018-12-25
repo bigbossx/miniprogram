@@ -24,7 +24,7 @@ Component({
     onItemPress(event) {
       console.log(event)
       const id = event.currentTarget.dataset.id;
-
+      console.log(id)
       this.triggerEvent("onGoodsItemPress", { id })
 
       wx.navigateTo({

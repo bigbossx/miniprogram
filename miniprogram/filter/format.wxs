@@ -1,0 +1,32 @@
+var format = {
+  formatDateFunc: function(timeStamp) {
+    var timeStampToDate = getDate(timeStamp)
+    return formatDataValue(timeStampToDate, timeStamp)
+  }
+}
+function formatDataValue(timeStampToDate, timeStamp) {
+  var year = timeStampToDate.getFullYear();
+  var month = timeStampToDate.getMonth() + 1;
+  var date = timeStampToDate.getDate();
+  var hour = timeStampToDate.getHours();
+  var minute = timeStampToDate.getMinutes();
+  var second = timeStampToDate.getSeconds();
+  var todayStartTimeStamp = getDate(year + "-" + month + "-" + date).getTime()
+  // var yesterdayStartTimeStamp = getDate(year + "-" + month + "-" + date - 1).getTime()
+  // var beforeYesterdayStartTimeStamp = getDate(year + "-" + month + "-" + date - 2).getTime()
+  month = month < 10 ? "0" + month : month
+  date = date < 10 ? "0" + date : date
+  hour = hour < 10 ? "0" + hour : hour
+  minute = minute < 10 ? "0" + minute : minute
+  second = second < 10 ? "0" + second : second
+  var str = ""
+  if (timeStamp > todayStartTimeStamp) {
+    str = hour + ":" + minute
+  } else {
+    str = year + "-" + month + "-" + date + " " + hour + ":" + minute
+  }
+  return str
+}
+module.exports = {
+  format: format
+}

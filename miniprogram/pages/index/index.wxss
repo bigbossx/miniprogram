@@ -6,7 +6,12 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
-
+swiper{
+  height: 400rpx;
+}
+.x__swiper image {
+  height: 400rpx;
+}
 .x__grid_container {
   display: flex;
   justify-content: flex-start;
@@ -23,15 +28,10 @@ page {
   box-sizing: border-box;
 }
 
-.slide-image {
-  width: 100%;
-  height: 100%;
-}
-
 .goods__list_container {
   padding: 10rpx 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
   font-size: 24rpx;

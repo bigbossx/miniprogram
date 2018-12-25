@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    openid:"",
     region: ['广东省', '广州市', '天河区'],
     receiver: "",
     telephone: "",
@@ -35,13 +36,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    app.getUserInfoData().then((res) => {
-      app.globalData = {
-        ...res
-      }
-      this.fetchData(res.openId)
+  onLoad: async function(options) {
+    let res = await app.getUserInfoData()
+    await this.setData({
+      openId: res.openid
     })
+    this.fetchData(res.openid)
   },
 
   /**
@@ -96,14 +96,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    CloudFuncGet.queryGoods({
-      dataBase: "users",
-      page: this.data.page,
-      pageSize: this.data.pageSize,
-      where: {
-        "_openid": openid
-      }
-    }).then((res) => {
+    CloudFuncGet.queryUser(openid).then((res) => {
       // //如果有默认地址，先默认选择
       // res.data[0].address.map((item, index) => {
       //   if (item.isDefault) {
@@ -161,7 +154,7 @@ Page({
     await this.setData({
       selectedAddressIndex: currentSelectedIndex
     })
-    app.globalData.address=currentSelectedItem
+    app.globalData.address = currentSelectedItem
     wx.navigateBack({
       ...currentSelectedItem
     })
@@ -203,7 +196,8 @@ Page({
         actions: action
       });
       this.handleDeleteAddress().then((res) => {
-        this.fetchData(app.globalData.openid)
+        console.log(thi.data.openid)
+        this.fetchData(this.data.openid)
         action[1].loading = false;
         this.setData({
           deteleCofirmShow: false,
@@ -223,7 +217,7 @@ Page({
   //删除地址
   async handleDeleteAddress() {
     let where = {
-      openId: app.globalData.openId
+      openId: this.data.openId
     }
     let data = {
       id: this.data.operateId
@@ -241,14 +235,14 @@ Page({
     }
     if (this.data.modalTitle === "修改地址") {
       let where = {
-        openId: app.globalData.openId,
+        openId: this.data.openId,
         id: this.data.operateId,
       }
       await CloudFunc.editAddress(where, data).then((res) => {
         wx.showToast({
           title: '修改地址成功',
         })
-        this.fetchData(app.globalData.openid)
+        this.fetchData(this.data.openid)
         this.setData({
           addAddressModalShow: false
         })
@@ -260,13 +254,13 @@ Page({
       })
     } else {
       let where = {
-        openId: app.globalData.openId
+        openId: this.data.openId
       }
       await CloudFunc.addAddress(where, data).then((res) => {
         wx.showToast({
           title: '保存地址成功',
         })
-        this.fetchData(app.globalData.openid)
+        this.fetchData(this.data.openid)
         this.setData({
           addAddressModalShow: false
         })

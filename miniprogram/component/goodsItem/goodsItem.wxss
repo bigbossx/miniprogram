@@ -1,4 +1,5 @@
 /* component/goodsItem/goodsItem.wxss */
+
 .goods__list_item {
   width: 100%;
   background: #fff;
@@ -10,13 +11,20 @@
   align-items: center;
   padding: 10rpx 10rpx;
 }
-.item__name{
-  padding:10rpx 0 10rpx 10rpx; 
+
+.item__name {
+  padding: 10rpx 0 10rpx 10rpx;
   white-space: normal;
 }
+
 .avatar {
   display: flex;
   align-items: center;
+}
+
+.price {
+  color: #ff0036;
+  font-weight: 700;
 }
 
 .name {
@@ -35,9 +43,14 @@
 }
 
 .area {
-  color: blue;
+  color: #2d8cf0;
 }
-.item__price{
+
+.time{
+  color: #80848f;
+}
+
+.item__price {
   display: flex;
   justify-content: space-between;
   align-items: center;

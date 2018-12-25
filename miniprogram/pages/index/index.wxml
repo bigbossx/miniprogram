@@ -1,21 +1,25 @@
 <!--index.wxml-->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}" wx:key="{{index}}">
-    <swiper-item>
-      <image src="{{item}}" class="slide-image" />
-    </swiper-item>
-  </block>
-</swiper>
-<view class="container">
-  <i-row i-class="x__grid_container" wx:for="{{grids}}" wx:key="{{index}}">
-    <view class="x__grid_item" wx:for="{{item}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="{{subIndex}}">
-      <i-grid-icon>
-        <image src="{{subItem.icon}}" />
-      </i-grid-icon>
-      <i-grid-label>{{subItem.label}}</i-grid-label>
+<view class="skeleton">
+  <swiper class='x__swiper' indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image skeleton-rect" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="container">
+    <i-row i-class="x__grid_container" wx:for="{{grids}}" wx:key="{{index}}">
+      <view class="x__grid_item" wx:for="{{item}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="{{subIndex}}">
+        <i-grid-icon>
+          <image class="skeleton-radius" src="{{subItem.icon}}" />
+        </i-grid-icon>
+        <i-grid-label><text class="skeleton-rect">{{subItem.label}}</text></i-grid-label>
+      </view>
+    </i-row>
+    <view class="goods__list_container">
+      <goods-item style="width:48%;margin:0 1% 1% 1%;" bind:onGoodsItemPress="onItemPress" wx:for="{{goodsData}}" wx:key="{{index}}" data="{{item}}" />
     </view>
-  </i-row>
-  <view class="goods__list_container">
-    <goods-item style="width:48%;margin-bottom:10rpx;" bind:onGoodsItemPress="onItemPress" wx:for="{{goodsData}}" wx:key="{{index}}" data="{{item}}" />
   </view>
 </view>
+<i-load-more loading="{{ showLoadMore }}" />
+<skeleton wx:if="{{showSkeleton}}"></skeleton>

@@ -1,27 +1,28 @@
 <!--component/goodsItem/goodsItem.wxml-->
-<view class="goods__list_item" data-id="" bindtap='onItemPress'>
-      <view class="list__item_header">
-        <view class="avatar">
-          <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
-          <text class='name'>vision</text>
-        </view>
-        <view class="area">
-          <text>广州市</text>
-        </view>
-      </view>
-      <view class="list__item_content">
-        <image class="item__image" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"></image>
-      </view>
-      <view class="list__item_footer">
-        <view class="item__name">
-          <text>亚瑟士情侣鞋</text>
-        </view>
-        <view class="item__price">
-          <view class="avatar">
-            <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
-            <text class="price">3500元</text>
-          </view>
-          <text class="time">昨天05:10</text>
-        </view>
-      </view>
+<view class="goods__list_item skeleton" data-id="{{data._id}}" bindtap='onItemPress'>
+  <view class="list__item_header">
+    <view class="avatar">
+      <i-avatar class="skeleton-radius" src="{{data.avatarUrl}}" size="small"></i-avatar>
+      <text class='name skeleton-rect'>{{data.nickName}}</text>
     </view>
+    <view class="area">
+      <text class="skeleton-rect">{{data.address.region[2]}}</text>
+    </view>
+  </view>
+  <view class="list__item_content">
+    <image mode='aspectFit' lazy-load class="item__image skeleton-rect" src="{{data.images[0]}}"></image>
+  </view>
+  <view class="list__item_footer">
+    <view class="item__name">
+      <text class="skeleton-rect">{{data.name}}</text>
+    </view>
+    <view class="item__price">
+      <view class="avatar">
+        <i-avatar class="skeleton-radius" src="./../../../images/egg.png" size="small"></i-avatar>
+        <text class="skeleton-rect price">{{data.money}}元</text>
+      </view>
+      <text class="time skeleton-rect">{{formatModule.format.formatDateFunc(data.createTime)}}</text>
+    </view>
+  </view>
+</view>
+<wxs module="formatModule" src="./../../filter/format.wxs"></wxs>
