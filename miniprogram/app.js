@@ -13,6 +13,9 @@ App({
     this.globalData = {}
   },
   async getUserInfoData() {
+    wx.showLoading({
+      title: '加载中',
+    })
     console.log("0 after output")
     const res = await new Promise((resolve, reject) => {
       wx.getSetting({
@@ -57,6 +60,7 @@ App({
         this.globalData.openid = cloudRes.result.openid
       }
     }
+    wx.hideLoading()
     return this.globalData
   }
 })

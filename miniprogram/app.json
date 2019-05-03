@@ -14,7 +14,9 @@
     "pages/address/address",
     "pages/login/login",
     "pages/goodsDetail/goodsDetail",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/collection/collection",
+    "pages/goodsList/goodsList"
   ],
   "window": {
     "backgroundColor": "#fdd7e2",

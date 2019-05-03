@@ -28,15 +28,6 @@ swiper{
   box-sizing: border-box;
 }
 
-.goods__list_container {
-  padding: 10rpx 0;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  width: 100%;
-  font-size: 24rpx;
-}
-
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
   height: 140rpx;

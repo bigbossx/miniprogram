@@ -1,4 +1,6 @@
-// miniprogram/pages/profile/profile.js
+// miniprogram/pages/collection/collection.js
+import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
+const CloudFuncGet = require("./../../cloudDatabase/getDatas.js")
 const app = getApp()
 Page({
 
@@ -6,19 +8,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    goodsData: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    app.getUserInfoData().then((res) => {
-      console.log(res)
-      this.setData({
-        userInfo:res.userInfo
+  onLoad: async function(options) {
+    try {
+      wx.showLoading({
+        title: '加载中',
       })
-    })
+      let userInfo = await app.getUserInfoData()
+      let res = await CloudFuncGet.queryUser(userInfo.openid)
+      await this.setData({
+        goodsData: res.data[0].favorites
+      })
+      wx.hideLoading()
+    } catch (e) {
+      console.log(e)
+    }
+
   },
 
   /**
@@ -32,11 +42,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    console.log("show")
-    console.log(app.globalData)
-    app.globalData.userInfo && this.setData({
-      userInfo: app.globalData.userInfo
-    })
+
   },
 
   /**
@@ -72,10 +78,5 @@ Page({
    */
   onShareAppMessage: function() {
 
-  },
-  handleLogin(){
-    wx.navigateTo({
-      url: './../login/login',
-    })
   }
 })

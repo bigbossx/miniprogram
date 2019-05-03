@@ -10,7 +10,8 @@ Page({
     isNew: false,
     name: "",
     description: "",
-    category: "",
+    categoryType: "",
+    categoryValue: "",
     selectedImages: [],
   },
 
@@ -37,7 +38,8 @@ Page({
    */
   onShow: function() {
     this.setData({
-      category: app.globalData.categorySelectedValue || ""
+      categoryType: app.globalData.categorySelectedType,
+      categoryValue: app.globalData.categorySelectedValue
     })
   },
 
@@ -202,7 +204,8 @@ Page({
     const data = {
       name: this.data.name,
       description: this.data.description,
-      category: this.data.category,
+      categoryType: this.data.categoryType,
+      categoryValue: this.data.categoryValue,
       isNew: this.data.isNew,
       images: this.data.selectedImages,
       collection: 0,

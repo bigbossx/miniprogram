@@ -25,6 +25,6 @@
   </i-cell>
 </i-cell-group>
 <i-cell-group>
-  <i-cell title="分类" is-link url="/pages/category/category" value="{{category|| '选择分类'}}"></i-cell>
+  <i-cell title="分类" is-link url="/pages/category/category" value="{{categoryValue|| '选择分类'}}"></i-cell>
 </i-cell-group>
 <i-button type="primary" bind:click="handleNextSubmit" type="error" shape="circle" size="small">下一步 上架闲品</i-button>

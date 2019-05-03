@@ -120,6 +120,7 @@ Page({
   handleClickMenu(event){
     const value=event.currentTarget.dataset.value
     app.globalData.categorySelectedValue = value
+    app.globalData.categorySelectedType=this.data.menu[this.data.seletedIndex].mainTitle
     wx.switchTab({
       url: '/pages/publish/publish',
     })

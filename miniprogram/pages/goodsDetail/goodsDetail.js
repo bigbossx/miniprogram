@@ -3,6 +3,7 @@ import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
 const CloudFuncGet = require("./../../cloudDatabase/getDatas.js")
 const CloudFunc = require("./../../cloudDatabase/operateDatas.js")
 const app = getApp()
+
 Page({
 
   /**
@@ -51,25 +52,26 @@ Page({
       })
     })
   },
-  async fetchUserData(openid){
-    console.log("fetchUserData")
-    let userRes = await CloudFuncGet.queryUser(openid)
-    if (userRes.data[0].favorites) {
-      userRes.data[0].favorites.forEach(async (item, index) => {
-        if (item.id == this.data.id) {
-          await this.setData({
-            isCollected: true
-          })
-        }else{
-          await this.setData({
-            isCollected: false
-          })
-        }
+  async fetchUserData(openid) {
+    try {
+      console.log("fetchUserData")
+      let userRes = await CloudFuncGet.queryUser(openid)
+      if (userRes.data[0].favorites) {
+        userRes.data[0].favorites.map(async(item, index) => {
+          if (item._id == this.data.id) {
+            await this.setData({
+              isCollected: true
+            })
+          }
+        })
+      }
+      await this.setData({
+        userData: userRes.data[0]
       })
+      console.log(this.data.isCollected)
+    } catch (e) {
+
     }
-    await this.setData({
-      userData: userRes.data[0]
-    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -116,47 +118,65 @@ Page({
   },
   async handleAddFavorites() {
     try {
-      let data = {
-        type: "add",
-        dataBase: "xianyu_goods",
-        goods: {
-          id: this.data.pageData._id,
-          ...this.data.pageData
-        }
-      }
       wx.showLoading({
         title: '加载中',
       })
-      let res = await CloudFunc.addUserFavorites(data)
-      let editRes = await CloudFunc.editGoodsFavorites(data)
-      await this.fetchUserData(this.data.userData._openid)
+      let data = {
+        type: "add",
+        dataBase: "xianyu_goods",
+      }
+      let goods = {
+        ...this.data.pageData
+      }
+      await wx.cloud.callFunction({
+        name: 'updateDbData',
+        data: {
+          type: "add",
+          field: "favorites",
+          goods,
+        }
+      })
+      let editRes = await CloudFunc.editGoodsFavorites(data, goods)
+      await this.setData({
+        isCollected: true
+      })
       await this.fetchData()
       wx.hideLoading()
     } catch (e) {
+      console.log(e)
       wx.showToast({
         title: `错误${e}`,
       })
     }
   },
   async cancelAddFavorites() {
-    try{
+    try {
       wx.showLoading({
         title: '加载中',
       })
       let data = {
         type: "cancel",
         dataBase: "xianyu_goods",
-        goods:{
-          id: this.data.pageData._id,
-          openid: this.data.userData._openid
-        }
       }
-      let res = await CloudFunc.cancelUserFavorites(data)
-      let editRes = await CloudFunc.editGoodsFavorites(data)
-      await this.fetchUserData(this.data.userData._openid)
+      let goods = {
+        ...this.data.pageData
+      }
+      await wx.cloud.callFunction({
+        name: 'updateDbData',
+        data: {
+          type: "delete",
+          field: "favorites",
+          goods,
+        }
+      })
+      await this.setData({
+        isCollected: false
+      })
+      let editRes = await CloudFunc.editGoodsFavorites(data, goods)
       await this.fetchData()
       wx.hideLoading()
-    }catch(e){
+    } catch (e) {
+      console.log(e)
       wx.showToast({
         title: `错误${e}`,
       })

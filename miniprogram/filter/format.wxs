@@ -1,6 +1,9 @@
 var format = {
   formatDateFunc: function(timeStamp) {
     var timeStampToDate = getDate(timeStamp)
+    var test=getDate('2019-1-1')
+    test.setDate(test.getDate()-1)
+    console.log("test",test)
     return formatDataValue(timeStampToDate, timeStamp)
   }
 }

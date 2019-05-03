@@ -32,64 +32,7 @@ function updateGoods(where, data) {
   })
 }
 
-function addUserFavorites(data) {
-  console.log(data)
-  return new Promise((resolve, reject) => {
-    //加入收藏
-    delete data.goods._id
-    delete data.goods._openid
-
-    db.collection('users').doc({
-      _openid: data.goods.openid
-    }).update({
-      data: {
-        favorites: db.command.unshift(data.goods)
-      },
-      success: res => {
-        // 在返回结果中会包含新创建的记录的 _id
-        resolve(res)
-      },
-      fail: err => {
-        reject(err)
-      }
-    })
-  })
-}
-
-function cancelUserFavorites(data) {
-  console.log(data.goods.openid)
-  return new Promise((resolve, reject) => {
-    //取消收藏
-    db.collection('users').doc("XBYjunffS3SWCidP").get().then((res)=>{console.log(res)})
-    db.collection('users').doc({
-      _openid: data.goods.openid
-    }).get().then((res) => {
-      console.log(res)
-      // res.data[0].favorites.forEach((item, index) => {
-      //   if (item.id == data.goods.id) {
-      //     res.data[0].favorites.splice(index, 1)
-      //   }
-      // })
-      // console.log(res.data[0].favorites)
-      // db.collection('users').doc({
-      //   _openid: data.goods.openid
-      // }).update({
-      //   data: {
-      //     favorites: res.data[0].favorites
-      //   },
-      //   success: res => {
-      //     console.log(res)
-      //     resolve(res)
-      //   },
-      //   fail: err => {
-      //     reject(err)
-      //   }
-      // })
-    })
-  })
-}
-
-function editGoodsFavorites(data) {
+function editGoodsFavorites(data,goods) {
   let updateField = {}
   if (data.type == "add") {
     updateField = {
@@ -101,8 +44,7 @@ function editGoodsFavorites(data) {
     }
   }
   return new Promise((resolve, reject) => {
-    console.log(data)
-    db.collection(data.dataBase).doc(data.goods.id).update({
+    db.collection(data.dataBase).doc(goods._id).update({
       data: updateField,
       success(res) {
         resolve(res)
@@ -130,10 +72,9 @@ function addUsers(data) {
 }
 
 function addAddress(where, data) {
+  console.log(where.openId)
   return new Promise((resolve, reject) => {
-    db.collection('users').doc({
-      _openid: where.openId
-    }).update({
+    db.collection('users').doc(where.openId).update({
       data: {
         address: db.command.unshift(data)
       },
@@ -220,7 +161,5 @@ module.exports = {
   addAddress,
   deleteAddress,
   editAddress,
-  addUserFavorites,
-  cancelUserFavorites,
   editGoodsFavorites
 }

@@ -11,9 +11,9 @@
             <i-icon type="trash_fill" size="20" color="red" data-id="{{item.timestamp}}" catchtap='deleteAddressConfirm'/>
           </view>
         </view>
-        <view class='flex-center'>
+        <!-- <view class='flex-center'>
           <i-icon type="success_fill" size="28" color="#ed3f14" wx:if="{{selectedAddressIndex==index}}" />
-        </view>
+        </view> -->
       </view>
     </i-card>
   </view>

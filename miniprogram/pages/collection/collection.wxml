@@ -1,0 +1,4 @@
+<!--miniprogram/pages/collection/collection.wxml-->
+<view class="goods__list_container">
+  <goods-item style="width:48%;margin:0 1% 1% 1%;" bind:onGoodsItemPress="onItemPress" wx:for="{{goodsData}}" wx:key="{{index}}" data="{{item}}" />
+</view>

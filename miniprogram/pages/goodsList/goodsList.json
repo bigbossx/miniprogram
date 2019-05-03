@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "加载中...",
+  "usingComponents": {
+    "goods-item": "./../../component/goodsItem/goodsItem",
+    "i-load-more": "./../../iview/dist/load-more/index"
+  }
+}

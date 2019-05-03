@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openid:"",
+    openid: "",
     region: ['广东省', '广州市', '天河区'],
     receiver: "",
     telephone: "",
@@ -37,11 +37,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     let res = await app.getUserInfoData()
     await this.setData({
-      openId: res.openid
+      openid: res.openid
     })
-    this.fetchData(res.openid)
+    await this.fetchData(res.openid)
+    wx.hideLoading()
   },
 
   /**
@@ -92,27 +96,32 @@ Page({
   onShareAppMessage: function() {
 
   },
+  async onPullDownRefresh() {
+    try {
+      wx.showNavigationBarLoading()
+      await this.fetchData(this.data.openid)
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+    } catch (e) {
+      wx.showToast({
+        title: `下拉刷新异常${e}`,
+      })
+    }
+  },
   fetchData(openid) {
+    console.log(openid)
     wx.showLoading({
       title: '加载中',
     })
     CloudFuncGet.queryUser(openid).then((res) => {
-      // //如果有默认地址，先默认选择
-      // res.data[0].address.map((item, index) => {
-      //   if (item.isDefault) {
-      //     this.setData({
-      //       selectedAddressIndex: index
-      //     })
-      //   }
-      // })
       this.setData({
-        addressDatas: res.data[0].address //.filter((item) =>item)
+        addressDatas: res.data[0].address.filter((item) => item)
       })
       wx.hideLoading()
     }).catch((err) => {
       wx.hideLoading()
       wx.showToast({
-        title: '`加载失败${err}`',
+        title: `加载失败${err}`,
       })
     })
 
@@ -196,7 +205,6 @@ Page({
         actions: action
       });
       this.handleDeleteAddress().then((res) => {
-        console.log(thi.data.openid)
         this.fetchData(this.data.openid)
         action[1].loading = false;
         this.setData({
@@ -219,26 +227,40 @@ Page({
     let where = {
       openId: this.data.openId
     }
-    let data = {
-      id: this.data.operateId
+    let goods = {
+      _id: this.data.operateId
     }
-    return await CloudFunc.deleteAddress(where, data)
+    return await wx.cloud.callFunction({
+      name: 'updateDbData',
+      data: {
+        type: "delete",
+        field: "address",
+        goods,
+      }
+    })
   },
   async saveAddress() {
-    let data = {
-      receiver: this.data.receiver,
-      telephone: this.data.telephone,
-      addressDetail: this.data.addressDetail,
-      region: this.data.region,
-      timestamp: new Date().getTime(),
-      isDefault: false
-    }
-    if (this.data.modalTitle === "修改地址") {
-      let where = {
-        openId: this.data.openId,
-        id: this.data.operateId,
+    try {
+      let data = {
+        receiver: this.data.receiver,
+        telephone: this.data.telephone,
+        addressDetail: this.data.addressDetail,
+        region: this.data.region,
+        timestamp: new Date().getTime(),
+        isDefault: false
       }
-      await CloudFunc.editAddress(where, data).then((res) => {
+      if (this.data.modalTitle === "修改地址") {
+        await wx.cloud.callFunction({
+          name: 'updateDbData',
+          data: {
+            type: "edit",
+            field: "address",
+            goods: {
+              _id: this.data.operateId,
+              data
+            },
+          }
+        })
         wx.showToast({
           title: '修改地址成功',
         })
@@ -246,17 +268,15 @@ Page({
         this.setData({
           addAddressModalShow: false
         })
-      }).catch((err) => {
-        wx.showToast({
-          icon: 'none',
-          title: '修改地址失败'
+      } else {
+        await wx.cloud.callFunction({
+          name: 'updateDbData',
+          data: {
+            type: "add",
+            field: "address",
+            goods: data,
+          }
         })
-      })
-    } else {
-      let where = {
-        openId: this.data.openId
-      }
-      await CloudFunc.addAddress(where, data).then((res) => {
         wx.showToast({
           title: '保存地址成功',
         })
@@ -264,11 +284,11 @@ Page({
         this.setData({
           addAddressModalShow: false
         })
-      }).catch((err) => {
-        wx.showToast({
-          icon: 'none',
-          title: '保存地址失败'
-        })
+      }
+    } catch (e) {
+      wx.showToast({
+        icon: 'none',
+        title: `保存地址失败${e}`
       })
     }
   }

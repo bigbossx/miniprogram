@@ -24,7 +24,7 @@ Page({
         {
           url: "./../login/login",
           icon: "./../../images/makeups.png",
-          label: "穿搭美妆",
+          label: "穿衣美妆",
         },
         {
           url: "./../login/login",
@@ -142,6 +142,12 @@ Page({
         title: `上拉加载异常${e}`,
       })
     }
+  },
+  onPressCategoryItem(event){
+    let categoryType = event.currentTarget.dataset.label
+    wx.navigateTo({
+      url: `./../goodsList/goodsList?category=${categoryType}`,
+    })
   },
   onItemPress(event) {
     console.log(event)
