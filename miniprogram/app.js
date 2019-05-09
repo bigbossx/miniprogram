@@ -1,5 +1,10 @@
 //app.js
 import regeneratorRuntime from "./util/regenerator-runtime/runtime.js"
+const { Realtime } = require('./libs/realtime.weapp.min.js')
+const realtime = new Realtime({
+  appId: '7qIbqFtvrVWo9yrKRkbdanqn-gzGzoHsz',
+  appKey: 'k9s6Hw3BgHrh3YaFhUWqAJzy',
+});
 App({
   onLaunch: async function() {
     console.log("onLaunch")
@@ -12,6 +17,7 @@ App({
     }
     this.globalData = {}
   },
+  realtime: realtime,
   async getUserInfoData() {
     wx.showLoading({
       title: '加载中',
