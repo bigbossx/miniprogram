@@ -16,7 +16,8 @@
     "pages/goodsDetail/goodsDetail",
     "pages/profile/profile",
     "pages/collection/collection",
-    "pages/goodsList/goodsList"
+    "pages/goodsList/goodsList",
+    "pages/chat/chat"
   ],
   "window": {
     "backgroundColor": "#fdd7e2",

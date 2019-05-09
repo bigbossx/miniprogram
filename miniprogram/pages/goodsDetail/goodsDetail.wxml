@@ -31,7 +31,7 @@
     <view class="flex-start mt-2 lightColor skeleton-rect">
       <text class="font-base">{{pageData.description||"描述"}}</text>
     </view>
-    <view class="flex-between mt-1 pt-2 flex-warp border-top-1">
+    <view class="flex-between mt-1 pt-2 flex-warp border-top-1" bindtap='handleEnterChat'>
       <view class="font-base">
         <i-avatar class="skeleton-radius" src="{{pageData.avatarUrl}}" size="default"></i-avatar>
         <text class="mh-1 skeleton-rect">{{pageData.nickName||"用户名"}}</text>

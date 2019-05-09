@@ -73,6 +73,16 @@ Page({
 
     }
   },
+  handleEnterChat() {
+    let paramData = JSON.stringify({
+      conversaterId:this.data.pageData._openid,
+      avatarUrl: this.data.pageData.avatarUrl,
+      nickName: this.data.pageData.nickName,
+    })
+    wx.navigateTo({
+      url: `./../chat/chat?paramData=${paramData}`,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
