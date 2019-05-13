@@ -30,11 +30,23 @@ Page({
           id:item.members[1]
         }
       }).then(res=>{
-        item.userInfo=res.result
+        // Object.assign(...item,{userInfo:res.result})
+        // item.userInfo=res.result
+        // item["userInfo"]=res.result
+        Object.defineProperty(item, "userInfo", {
+          enumerable: true,
+          configurable: true,
+          writable: true,
+          value: res.result
+        });
       })
       return item
     })
     console.log(composeUserInfoList)
+    composeUserInfoList.map(item=>{
+      console.log(item.propertyIsEnumerable("userInfo"))
+      console.log(item.propertyIsEnumerable("members"))
+    })
     this.setData({
       allMessageList:composeUserInfoList
     })
