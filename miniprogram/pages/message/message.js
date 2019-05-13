@@ -18,7 +18,7 @@ Page({
       return {
         id:item.id,
         lastMessage:item.lastMessage,
-        lastMessageAt:item.lastMessageAt,
+        lastMessageAt:new Date(item.lastMessageAt),
         unreadMessagesCount:item.unreadMessagesCount,
         members:item.members
       }
@@ -38,6 +38,7 @@ Page({
     this.setData({
       allMessageList:composeUserInfoList
     })
+    this.onShow()
   },
 
   /**
@@ -51,10 +52,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(this.data.allMessageList)
   },
-  showData(){
-    console.log(this.data.allMessageList)
+  showData(e){
+    console.log("aaa",this.data.allMessageList[0].userInfo)
+    let paramData=JSON.stringify(e.currentTarget.dataset.params)
+    console.log(e.currentTarget.dataset.params)
+    wx.navigateTo({
+      url: `./../chat/chat?paramData=${paramData}`,
+    })
   },
 
   /**
