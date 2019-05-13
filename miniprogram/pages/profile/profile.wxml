@@ -1,8 +1,7 @@
 <!--miniprogram/pages/profile/profile.wxml-->
 <i-panel title="">
   <i-card full title="{{userInfo.nickName||'用户名'}}" extra="查看个人主页" thumb="{{userInfo.avatarUrl||'https://i.loli.net/2017/08/21/599a521472424.jpg'}}" i-class="card-demo">
-  <i-button wx:
-  ="{{!userInfo.avatarUrl}}" bind:click="handleLogin" type="primary" size="small" slot="content">点击登录</i-button>
+  <i-button wx:if="{{!userInfo.avatarUrl}}" bind:click="handleLogin" type="primary" size="small" slot="content">点击登录</i-button>
     <!-- <view slot="footer">尾部内容</view> -->
   </i-card>
 </i-panel>
@@ -14,8 +13,9 @@
     <i-cell title="地址管理" is-link url="/pages/address/address">
       <i-icon type="time" slot="icon" />
     </i-cell>
-    <i-cell title="我的足迹" is-link url="/pages/dashboard/index" only-tap-footer>
+    <i-cell title="消息中心" is-link url="/pages/message/message">
       <i-icon type="createtask" slot="icon" />
+      <text class='cu-tag round bg-red' slot="footer">{{totalUnreadMessage}}</text>
     </i-cell>
   </i-cell-group>
 </i-panel>

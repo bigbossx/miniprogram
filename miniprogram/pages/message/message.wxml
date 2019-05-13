@@ -1,0 +1,20 @@
+<!--miniprogram/pages/message/message.wxml-->
+ <view class="cu-list menu-avatar">
+    
+    <view class="cu-item" wx:for="{{allMessageList}}" wx:key="item.id" bindtap='showData'>
+      <view class="cu-avatar radius lg" style="background-image:url({{item.userInfo.avatarUrl}})"></view>
+      <view class="content">
+        <view class="text-pink">
+          <text class="text-cut">{{item.userInfo.nickName}}asdasd</text>
+        </view>
+        <view class="text-gray text-sm flex">
+          <text class="text-cut">{{item.lastMessage.content._lctext}}</text>
+        </view>
+      </view>
+      <view class="action">
+        <view class="text-grey text-xs">{{item.lastMessageAt}}</view>
+        <view class="cu-tag round bg-red sm">{{item.unreadMessagesCount}}</view>
+      </view>
+    </view>
+   
+  </view>

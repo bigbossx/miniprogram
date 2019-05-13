@@ -1,12 +1,13 @@
 // miniprogram/pages/profile/profile.js
-const app = getApp()
+let app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {},
+    totalUnreadMessage:0
   },
 
   /**
@@ -14,10 +15,13 @@ Page({
    */
   onLoad: function(options) {
     app.getUserInfoData().then((res) => {
-      console.log(res)
       this.setData({
         userInfo:res.userInfo
       })
+    })
+    console.log("profile load and globalData",app.globalData)
+    this.setData({
+      totalUnreadMessage:app.globalData.totalUnreadMessage
     })
   },
 
@@ -33,7 +37,6 @@ Page({
    */
   onShow: function() {
     console.log("show")
-    console.log(app.globalData)
     app.globalData.userInfo && this.setData({
       userInfo: app.globalData.userInfo
     })

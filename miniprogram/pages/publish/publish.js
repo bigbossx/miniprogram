@@ -187,7 +187,7 @@ Page({
       })
       return false
     }
-    if (!this.data.category) {
+    if (!this.data.categoryValue) {
       wx.showToast({
         icon: "none",
         title: '请选择分类',
