@@ -14,10 +14,10 @@
         <text>{{pageData.money}}</text>
         <text>元</text>
       </view>
-      <view class="font-base flex-around lightColor skeleton-rect">
+      <!-- <view class="font-base flex-around lightColor skeleton-rect">
         <text class="mr-2">收藏</text>
         <text>{{pageData.collection}}</text>
-      </view>
+      </view> -->
     </view>
     <view class="flex-start mt-2 skeleton-rect">
       <text class="font-small">支持发货方式：</text>

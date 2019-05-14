@@ -75,7 +75,7 @@ Page({
   },
   handleEnterChat() {
     let paramData = JSON.stringify({
-      conversaterId:this.data.pageData._openid,
+      openId:this.data.pageData._openid,
       avatarUrl: this.data.pageData.avatarUrl,
       nickName: this.data.pageData.nickName,
     })

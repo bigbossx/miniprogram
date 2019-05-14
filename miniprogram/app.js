@@ -29,29 +29,52 @@ App({
           })
           realtime.createIMClient(res.result.openid).then(function (user) {
             console.log("__________realtime user ___________", user)
-            user.on(Event.MESSAGE, function (message, conversation) {
-              console.log('Message received: ' + message.text);
-              wx.showToast({
-                title: message.text,
-              })
-            });
+            // user.on(Event.MESSAGE, function (message, conversation) {
+            //   console.log('Message received: ' + message.text);
+            //   wx.showToast({
+            //     title: message.text,
+            //   })
+            // });
             user.on(Event.UNREAD_MESSAGES_COUNT_UPDATE, function (conversations) {
-              let totalUnreadMessgae=0
-              for (let conv of conversations) {
-                console.log(conv.id, conv.name, conv.unreadMessagesCount);
-                totalUnreadMessgae+=conv.unreadMessagesCount
-                var messageIterator = conv.createMessagesIterator({ limit: 10 });
+              console.log(conversations)
+              //判断修改还是增加conversation
+              if (_this.globalData.conversations&&_this.globalData.conversations.length>0){
+                let flag = false
+                _this.globalData.conversations = _this.globalData.conversations.map(item => {
+                  if (item.id === conversations[0].id) {
+                    item = conversations[0]
+                    flag = true
+                  }
+                  return item
+                })
+                if (!flag) {
+                  _this.globalData.conversations=_this.globalData.conversations.concat(conversations)
+                }
+              }else{
+                _this.globalData.conversations=conversations
               }
-              if(totalUnreadMessgae){
+              //计算totalUnreadMessage
+              let totalUnreadMessage = 0
+              for (let conv of _this.globalData.conversations) {
+                console.log(conv.id, conv.name, conv.unreadMessagesCount);
+                totalUnreadMessage+=conv.unreadMessagesCount
+              }
+              
+              //set tabbar reddot
+              console.log(totalUnreadMessage)
+              if(totalUnreadMessage){
                 wx.setTabBarBadge({
                   index: 2,
-                  text: String(totalUnreadMessgae),
+                  text: String(totalUnreadMessage),
                 })
               }else{
-                wx.removeTabBarBadge(2)
+                console.log("removeTabBarBadge")
+                wx.removeTabBarBadge({
+                  index: 2
+                })
               }
-              _this.globalData.totalUnreadMessage=totalUnreadMessgae
-              _this.globalData.conversations=conversations
+              _this.globalData.totalUnreadMessage = totalUnreadMessage
+              console.log(_this.globalData.totalUnreadMessage)
               wx.hideLoading()
             });
           })

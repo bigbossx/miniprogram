@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "chat",
+  "usingComponents": {
+    "i-icon": "./../../iview/dist/icon/index"
+  }
 }

@@ -1,2 +1,34 @@
 <!--miniprogram/pages/chat/chat.wxml-->
-<text>miniprogram/pages/chat/chat.wxml</text>
+<view class="cu-chat chat-container">
+  <view wx:for="{{messageList}}" wx:key="{{item.id}}" data-params="{{item}}" bindtap='testItemData' >
+    <view class="cu-item self" wx:if="{{userInfo.openId===item.from}}">
+      <view class="main">
+        <view class="content bg-green shadow">
+          <text>{{item.text||item._lctext}}</text>
+        </view>
+      </view>
+      <view class="cu-avatar radius" style="background-image:url({{userInfo.avatarUrl}})"></view>
+    </view>
+    <view class="cu-item" wx:else>
+      <view class="cu-avatar radius" style="background-image:url({{conversaterInfo.avatarUrl}})"></view>
+      <view class="main">
+        <view class="content shadow">
+          <text>{{item.text||item._lctext}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+</view>
+<view class="box footer__btn">
+  <view class="cu-bar input">
+    <view class="action">
+      <i-icon type="add" size="28" color="#80848f" />
+    </view>
+    <input class="solid-bottom" maxlength="300" cursor-spacing="10" value="{{currentMessage}}" bindinput="onInputMessageChange"></input>
+    <view class="action">
+      <i-icon type="emoji" size="28" color="#80848f" />
+    </view>
+    <button class="cu-btn bg-green shadow-blur" disabled="{{currentMessage.length===0}}" bindtap='handleSendMessage'>发送</button>
+  </view>
+</view>

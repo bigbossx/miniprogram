@@ -15,7 +15,7 @@
     </i-cell>
     <i-cell title="消息中心" is-link url="/pages/message/message">
       <i-icon type="createtask" slot="icon" />
-      <text class='cu-tag round bg-red' slot="footer">{{totalUnreadMessage}}</text>
+      <text class='cu-tag round bg-red' slot="footer" wx:if="{{totalUnreadMessage>0}}">{{totalUnreadMessage}}</text>
     </i-cell>
   </i-cell-group>
 </i-panel>

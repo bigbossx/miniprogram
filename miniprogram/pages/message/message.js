@@ -1,4 +1,5 @@
 // miniprogram/pages/message/message.js
+import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
 let app=getApp()
 Page({
 
@@ -12,45 +13,38 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log(app.globalData)
-    let filterConvList=app.globalData.conversations.map(item=>{
-      return {
-        id:item.id,
-        lastMessage:item.lastMessage,
-        lastMessageAt:new Date(item.lastMessageAt),
-        unreadMessagesCount:item.unreadMessagesCount,
-        members:item.members
-      }
-    })
-    let composeUserInfoList=filterConvList.map(item=>{
-      wx.cloud.callFunction({
-        name:"getUserInfo",
-        data:{
-          id:item.members[1]
+  
+  onLoad: async function (options) {
+    try {
+      let filterConvList = app.globalData.conversations.map(item => {
+        return {
+          id: item.id,
+          lastMessage: item.lastMessage.text,
+          lastMessageAt: new Date(item.lastMessageAt).toLocaleTimeString(),
+          unreadMessagesCount: item.unreadMessagesCount,
+          members: item.members
         }
-      }).then(res=>{
-        // Object.assign(...item,{userInfo:res.result})
-        // item.userInfo=res.result
-        // item["userInfo"]=res.result
-        Object.defineProperty(item, "userInfo", {
-          enumerable: true,
-          configurable: true,
-          writable: true,
-          value: res.result
-        });
       })
-      return item
-    })
-    console.log(composeUserInfoList)
-    composeUserInfoList.map(item=>{
-      console.log(item.propertyIsEnumerable("userInfo"))
-      console.log(item.propertyIsEnumerable("members"))
-    })
-    this.setData({
-      allMessageList:composeUserInfoList
-    })
-    this.onShow()
+      console.log(app.globalData)
+      let composeUserInfoList = filterConvList.map(async item => {
+        let userInfoResult = await wx.cloud.callFunction({
+          name: "getUserInfo",
+          data: {
+            id: item.members.find(item=>item!==app.globalData.openid)
+          }
+        })
+        item.userInfo = userInfoResult.result
+        return item
+      })
+      let finallyData = await Promise.all(composeUserInfoList)
+      
+      this.setData({
+        allMessageList: finallyData
+      })
+    } catch (e) {
+
+    }
+
   },
 
   /**

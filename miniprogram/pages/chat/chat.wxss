@@ -1,1 +1,4 @@
 /* miniprogram/pages/chat/chat.wxss */
+.chat-container{
+  padding-bottom: 100rpx;
+}

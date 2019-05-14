@@ -1,44 +1,102 @@
 // miniprogram/pages/chat/chat.js
+import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
 const app=getApp()
 const realtime = getApp().realtime;
 const { TextMessage, Event } = require('./../../libs/realtime.weapp.min.js')
-
+let pageConversation
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    userInfo:{},
+    conversaterInfo:{},
+    messageList:[],
+    currentMessage:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.paramData)
-    const { conversaterId }=JSON.parse(options.paramData)
+    let that=this
+    console.log("chat params", JSON.parse(options.paramData))
+    const { openId, avatarUrl,nickName }=JSON.parse(options.paramData)
+    this.setData({
+      conversaterInfo: JSON.parse(options.paramData)
+    })
+    wx.setNavigationBarTitle({
+      title: nickName,
+    })
     app.getUserInfoData().then((res) => {
+      console.log("userInfo",res)
+      that.setData({
+        userInfo:{
+          openId:res.openid,
+          nickName:res.userInfo.nickName,
+          avatarUrl:res.userInfo.avatarUrl
+        }
+      })
       realtime.createIMClient(res.openid).then(function (user) {
         user.on(Event.MESSAGE, function (message, conversation) {
-          console.log('Message received: ' + message.text);
+          that.setData({
+            messageList: that.data.messageList.concat(message)
+          })
+          conversation.read().catch(console.error.bind(console));
+          that.pageScrollToBottom()
+          console.log("message receive",message.text)
           wx.showToast({
             title: message.text,
           })
         });
         // 创建与对方之间的对话
         return user.createConversation({
-          members: [conversaterId],
-          name: `${res.openid} & ${conversaterId}`,
+          members: [openId],
+          name: `${res.openid} & ${openId}`,
           unique: true
         });
       }).then(function (conversation) {
         // 发送消息
-        return conversation.send(new TextMessage(`i am ${res.openid}`));
-      }).then(function (message) {
-        console.log(`${res.openid} & ${conversaterId}`, '发送成功！');
-      }).catch(console.error);
+        // return 
+        conversation.read().then(res=>console.log(res)).catch(console.error.bind(console));
+        pageConversation=conversation
+        
+        var messageIterator = conversation.createMessagesIterator({ limit: 20 });
+        messageIterator.next().then(function (result) {
+          console.log(result)
+          that.setData({
+            messageList:result.value
+          })
+          that.pageScrollToBottom()
+        }).catch(console.error.bind(console));
+      })
     })
+  },
+  async handleSendMessage(){
+    if (this.data.currentMessage){
+      let sendResult = await pageConversation.send(new TextMessage(`${this.data.currentMessage}`))
+      console.log(sendResult)
+      this.setData({
+        messageList:this.data.messageList.concat(sendResult),
+        currentMessage:""
+      })
+      this.pageScrollToBottom()
+    }
+  },
+  onInputMessageChange(event){
+    this.setData({
+      currentMessage: event.detail.value
+    })
+  },
+  pageScrollToBottom () {
+    wx.createSelectorQuery().select('.chat-container').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      console.log(rect)
+      wx.pageScrollTo({
+        scrollTop: rect.height
+      })
+    }).exec()
   },
 
   /**
