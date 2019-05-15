@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "授权登录"
+  "navigationBarTitleText": "授权登录",
+  "usingComponents": {
+    "i-icon": "./../../iview/dist/icon/index"
+  } 
 }

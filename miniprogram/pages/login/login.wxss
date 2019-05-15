@@ -1,1 +1,4 @@
 /* miniprogram/pages/login/login.wxss */
+.login-container{
+  padding:20rpx;
+}

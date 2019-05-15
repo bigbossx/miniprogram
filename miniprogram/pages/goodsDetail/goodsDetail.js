@@ -18,7 +18,10 @@ Page({
     interval: 3000,
     duration: 1000,
     pageData: {},
-    isCollected: false
+    isCollected: false,
+    commentValue:"",
+    commentType:"comment",
+    replyId:""
   },
 
   /**
@@ -81,6 +84,42 @@ Page({
     })
     wx.navigateTo({
       url: `./../chat/chat?paramData=${paramData}`,
+    })
+  },
+  handleCommentChange(event){
+    this.setData({
+      commentValue: event.detail.detail.value
+    })
+  },
+  handleReply(event){
+    console.log(event.currentTarget.detail.replyId)
+    this.setData({
+      commentType:"reply",
+      replyId:event.currentTarget.detail.replyId
+    })
+  },
+  handleCommentSend(){
+    let commentData={
+      commentType:this.data.commentType,
+      userinfo:{
+        openId:this.data.userData._openid,
+        avatarUrl: this.data.userData.avatarUrl,
+        nickName: this.data.userData.nickName
+      },
+      reply:[],
+      timeStamp:new Date().getTime(),
+      commentValue:this.data.commentValue
+    }
+    wx.cloud.callFunction({
+      name: 'commentOrReply',
+      data: {
+        commentData,
+        id: this.data.id,
+        replyId:this.data.replyId
+      },
+      success: res => {
+        console.log(res)
+      }
     })
   },
   /**

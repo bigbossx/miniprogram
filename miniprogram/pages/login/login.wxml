@@ -1,2 +1,10 @@
 <!--miniprogram/pages/login/login.wxml-->
-<button open-type='getUserInfo' bindgetuserinfo="onGetUserInfo" class="weui-btn" type="primary">点击登录</button>
+<view class="login-container">
+   <view class="flex-sub text-center">
+      <view class="solid-bottom text-xsl padding">
+        <i-icon type="emoji" size="50" color="#179B16" />
+      </view>
+      <view class="padding">点击以授权小程序，获取你的基本信息</view>
+    </view>
+  <button open-type='getUserInfo' bindgetuserinfo="onGetUserInfo" class="weui-btn" type="primary">授权登录</button>
+</view>

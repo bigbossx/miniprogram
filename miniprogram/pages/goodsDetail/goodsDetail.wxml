@@ -26,7 +26,7 @@
       </i-tag>
     </view>
     <view class="flex-start mt-2">
-      <text class="skeleton-rect">{{pageData.name||"名称"}}</text>
+      <text class="skeleton-rect text-black text-bold">{{pageData.name||"名称"}}</text>
     </view>
     <view class="flex-start mt-2 lightColor skeleton-rect">
       <text class="font-base">{{pageData.description||"描述"}}</text>
@@ -44,14 +44,42 @@
     </view>
   </view>
   <i-panel title="留言(1)" class="skeleton-rect">
+    <view class="cu-card dynamic no-card" wx:if="{{pageData.comment.length>0}}">
+      <view class="cu-item shadow" wx:for="{{pageData.comment}}" wx:key="{{index}}" wx:for-item="item">
+        <view class="cu-list menu-avatar comment solids-top">
+          <view class="cu-item">
+            <view class="cu-avatar round" style="background-image:url({{item.userinfo.avatarUrl}});"></view>
+            <view class="content">
+              <view class="text-grey">{{item.userinfo.nickName}}</view>
+              <view class="text-gray text-content text-df">
+                {{item.commentValue}}
+              </view>
+              <view class="bg-grey padding-sm radius margin-top-sm  text-sm">
+                <view class="flex">
+                  <view>凯尔：</view>
+                  <view class="flex-sub">妹妹，你在帮他们给黑暗找借口吗?</view>
+                </view>
+              </view>
+              <view class="margin-top-sm flex justify-between">
+                <view class="text-gray text-df">{{item.timeStamp}}</view>
+                <view>
+                  <i-icon type="message_fill" size='20' />
+                  <text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
     <view class="font-base flex-column pv-3">
       <view class="light">还没有人留言哟，快来抢沙发~</view>
       <view class="flex-center mt-2">
         <i-avatar i-class="mh-2" src="{{userData.avatarUrl}}" size="default"></i-avatar>
         <view class="send-message-container flex-start">
           <text class="arrow-left"></text>
-          <i-input i-class="x__input" value="{{}}" type="number" mode="wrapped" placeholder="问问更多细节" />
-          <i-button i-class="x__input_button" bind:click="handleSendClick" type="success">发送</i-button>
+          <i-input i-class="x__input" value="{{commentValue}}" type="text" mode="wrapped" bind:change="handleCommentChange" placeholder="问问更多细节" />
+          <i-button i-class="x__input_button" bind:click="handleCommentSend" type="success">发送</i-button>
         </view>
       </view>
     </view>
