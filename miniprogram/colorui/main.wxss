@@ -456,7 +456,7 @@ checkbox.white[checked] .wx-checkbox-input, radio.white[checked] .wx-radio-input
 }
 
 .solid-top::after {
-  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  border-top: 1rpx solid #f5f5f5;
 }
 
 .solid-right::after {

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "用户主页",
+  "usingComponents": {
+    "i-tabs": "./../../iview/dist/tabs/index",
+    "i-tab": "./../../iview/dist/tab/index",
+    "goods-item": "./../../component/goodsItem/goodsItem",
+    "i-load-more": "./../../iview/dist/load-more/index"
+  }
+}

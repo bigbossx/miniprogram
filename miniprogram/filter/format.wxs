@@ -23,11 +23,12 @@ function formatDataValue(timeStampToDate, timeStamp) {
   minute = minute < 10 ? "0" + minute : minute
   second = second < 10 ? "0" + second : second
   var str = ""
-  if (timeStamp > todayStartTimeStamp) {
-    str = hour + ":" + minute
-  } else {
-    str = year + "-" + month + "-" + date + " " + hour + ":" + minute
-  }
+  // if (timeStamp > todayStartTimeStamp) {
+  //   str = hour + ":" + minute
+  // } else {
+  //   str = year + "-" + month + "-" + date + " " + hour + ":" + minute
+  // }
+  str = year + "-" + month + "-" + date + " " + hour + ":" + minute
   return str
 }
 module.exports = {

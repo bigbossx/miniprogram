@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "闲品详情",
+  "backgroundColor": "#ffffff",
   "usingComponents": {
     "i-avatar": "./../../iview/dist/avatar/index",
     "i-panel": "./../../iview/dist/panel/index",

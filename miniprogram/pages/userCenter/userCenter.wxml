@@ -1,0 +1,22 @@
+<!--miniprogram/pages/userCenter/userCenter.wxml-->
+<view class="UCenter-bg bg-gradual-orange">
+  <view class="cu-avatar xl round" style="background-image:url({{userInfo.avatarUrl}});"></view>
+  <view class="text-xl">{{userInfo.nickName}}
+  </view>
+  <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+</view>
+<i-tabs current="{{ currentTab }}" color="#ffd84d" bindchange="handleChange">
+    <i-tab key="published" title="在出售"></i-tab>
+    <i-tab key="sold" title="已卖出"></i-tab>
+    <i-tab key="pending" title="未上架"></i-tab>
+</i-tabs>
+<view class="goods__list_container">
+  <goods-item style="width:48%;margin:0 1% 2% 1%;" wx:if="{{currentTab==='published'}}" bind:onGoodsItemPress="onItemPress" wx:for="{{published.goodsData}}" wx:key="{{index}}" data="{{item}}" />
+</view>
+<view class="goods__list_container">
+  <goods-item style="width:48%;margin:0 1% 2% 1%;" wx:if="{{currentTab==='pending'}}"  bind:onGoodsItemPress="onItemPress" wx:for="{{pending.goodsData}}" wx:key="{{index}}" data="{{item}}" />
+</view>
+<view class="goods__list_container">
+  <goods-item style="width:48%;margin:0 1% 2% 1%;" wx:if="{{currentTab==='sold'}}"  bind:onGoodsItemPress="onItemPress" wx:for="{{sold.goodsData}}" wx:key="{{index}}" data="{{item}}" />
+</view>
+<i-load-more loading="{{ showLoadMore }}" />

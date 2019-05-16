@@ -29,12 +29,10 @@ App({
           })
           realtime.createIMClient(res.result.openid).then(function (user) {
             console.log("__________realtime user ___________", user)
-            // user.on(Event.MESSAGE, function (message, conversation) {
-            //   console.log('Message received: ' + message.text);
-            //   wx.showToast({
-            //     title: message.text,
-            //   })
-            // });
+            user.on(Event.MESSAGE, function (message, conversation) {
+              console.log('Message received: ' + conversation);
+              
+            });
             user.on(Event.UNREAD_MESSAGES_COUNT_UPDATE, function (conversations) {
               console.log(conversations)
               //判断修改还是增加conversation
@@ -65,7 +63,7 @@ App({
               if(totalUnreadMessage){
                 wx.setTabBarBadge({
                   index: 2,
-                  text: String(totalUnreadMessage),
+                  text: String(totalUnreadMessage||0),
                 })
               }else{
                 console.log("removeTabBarBadge")
@@ -75,8 +73,9 @@ App({
               }
               _this.globalData.totalUnreadMessage = totalUnreadMessage
               console.log(_this.globalData.totalUnreadMessage)
-              wx.hideLoading()
+              
             });
+            wx.hideLoading()
           })
         },
         fail: err => {

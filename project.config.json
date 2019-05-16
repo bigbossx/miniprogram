@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 10,
+			"current": 11,
 			"list": [
 				{
 					"id": -1,
@@ -96,6 +96,13 @@
 					"id": -1,
 					"name": "chat",
 					"pathName": "pages/chat/chat",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "userCenter",
+					"pathName": "pages/userCenter/userCenter",
 					"scene": null
 				}
 			]

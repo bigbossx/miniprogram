@@ -7,7 +7,7 @@
       </swiper-item>
     </block>
   </swiper>
-  <view class="p-3">
+  <view class="p-3" style="background:#fff">
     <view class="flex-between">
       <view class="moneyRed flex-start skeleton-rect">
         <i-avatar src="./../../../images/egg.png" size="small"></i-avatar>
@@ -35,7 +35,7 @@
       <view class="font-base">
         <i-avatar class="skeleton-radius" src="{{pageData.avatarUrl}}" size="default"></i-avatar>
         <text class="mh-1 skeleton-rect">{{pageData.nickName||"用户名"}}</text>
-        <text class="lightColor skeleton-rect">{{pageData.createTime||"发布时间"}}</text>
+        <text class="lightColor skeleton-rect">{{formatModule.format.formatDateFunc(pageData.createTime)||"发布时间"}}</text>
       </view>
       <view class="font-base primaryColor">
         <text class="skeleton-rect">{{pageData.address.region[1]||"地址"}}-</text>
@@ -43,10 +43,36 @@
       </view>
     </view>
   </view>
-  <i-panel title="留言(1)" class="skeleton-rect">
+  <i-panel title="留言{{pageData.comment.length>0?'('+pageData.comment.length+')':''}}" class="skeleton-rect">
+    <view class="font-base flex-column pv-3">
+      <view class="light" wx:if="{{pageData.comment.length===0}}">还没有人评论哟，快来抢沙发~</view>
+      <view class="flex-center mt-2">
+        
+        <view class="cu-form-group">
+          <i-avatar i-class="mh-2" src="{{userData.avatarUrl}}" size="default"></i-avatar>
+          <input 
+            value="{{commentValue}}"
+            type="text" 
+            class='x__input border-bottom-1'
+            mode="wrapped" 
+            confirm-type="send"
+            bindinput="handleCommentChange" 
+            bindblur="handleCommentBlur" 
+            bindconfirm="handleCommentSend"
+            focus="{{commentFocus}}" 
+            placeholder="问问更多细节"
+          ></input>
+          <button 
+            class="cu-btn bg-green x__button" 
+            disabled='{{!commentValue}}' 
+            bindtap='handleCommentSend'
+          >{{commentType==='comment'?"评论":"回复"}}</button>
+        </view>
+      </view>
+    </view>
     <view class="cu-card dynamic no-card" wx:if="{{pageData.comment.length>0}}">
-      <view class="cu-item shadow" wx:for="{{pageData.comment}}" wx:key="{{index}}" wx:for-item="item">
-        <view class="cu-list menu-avatar comment solids-top">
+      <view class="cu-item shadow" wx:for="{{pageData.comment}}" wx:key="{{item.timeStamp}}" wx:for-item="item">
+        <view class="cu-list menu-avatar comment border-top-1">
           <view class="cu-item">
             <view class="cu-avatar round" style="background-image:url({{item.userinfo.avatarUrl}});"></view>
             <view class="content">
@@ -54,17 +80,16 @@
               <view class="text-gray text-content text-df">
                 {{item.commentValue}}
               </view>
-              <view class="bg-grey padding-sm radius margin-top-sm  text-sm">
-                <view class="flex">
-                  <view>凯尔：</view>
-                  <view class="flex-sub">妹妹，你在帮他们给黑暗找借口吗?</view>
+              <view class="bg-gray padding-sm radius margin-top-sm text-sm" wx:if="{{item.reply.length}}">
+                <view class="flex" wx:for="{{item.reply}}" wx:for-item="subItem" wx:key="{{subItem.timeStamp}}">
+                  <view>{{subItem.userinfo.nickName}}：</view>
+                  <view class="flex-sub">{{subItem.commentValue}}</view>
                 </view>
               </view>
               <view class="margin-top-sm flex justify-between">
-                <view class="text-gray text-df">{{item.timeStamp}}</view>
+                <view class="text-gray text-df">{{formatModule.format.formatDateFunc(item.timeStamp)}}</view>
                 <view>
-                  <i-icon type="message_fill" size='20' />
-                  <text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+                  <i-icon type="message_fill" size='25' color='#c5c6c7' data-replyid="{{item.timeStamp}}" bindtap='handleReply'/>
                 </view>
               </view>
             </view>
@@ -72,17 +97,7 @@
         </view>
       </view>
     </view>
-    <view class="font-base flex-column pv-3">
-      <view class="light">还没有人留言哟，快来抢沙发~</view>
-      <view class="flex-center mt-2">
-        <i-avatar i-class="mh-2" src="{{userData.avatarUrl}}" size="default"></i-avatar>
-        <view class="send-message-container flex-start">
-          <text class="arrow-left"></text>
-          <i-input i-class="x__input" value="{{commentValue}}" type="text" mode="wrapped" bind:change="handleCommentChange" placeholder="问问更多细节" />
-          <i-button i-class="x__input_button" bind:click="handleCommentSend" type="success">发送</i-button>
-        </view>
-      </view>
-    </view>
+    
   </i-panel>
 </view>
 <view class="footer__btn flex-start backgroundWhite border-top-1">
@@ -115,3 +130,4 @@
   </view>
 </view>
 <skeleton wx:if="{{showSkeleton}}"></skeleton>
+<wxs module="formatModule" src="./../../filter/format.wxs"></wxs>

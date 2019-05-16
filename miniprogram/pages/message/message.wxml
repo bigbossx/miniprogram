@@ -12,7 +12,7 @@
       </view>
       <view class="action">
         <view class="text-grey text-xs">{{item.lastMessageAt}}</view>
-        <view class="cu-tag round bg-red sm">{{item.unreadMessagesCount}}</view>
+        <view class="cu-tag round bg-red sm" wx:if="{{item.unreadMessagesCount}}">{{item.unreadMessagesCount}}</view>
       </view>
     </view>
    

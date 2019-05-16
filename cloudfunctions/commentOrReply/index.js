@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
       let res=await db.collection("xianyu_goods").doc(id).get()
       if(res){
         let updateComment=res.data.comment.map(item=>{
-          if (item.userInfo.openId === replyId){
+          if (item.timeStamp== replyId){
             item.reply.push(commentData)
           }
           return item

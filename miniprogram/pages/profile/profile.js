@@ -7,7 +7,19 @@ Page({
    */
   data: {
     userInfo: {},
-    totalUnreadMessage:0
+    openId:"",
+    totalUnreadMessage:0,
+    luxunSaying:[
+      "抓周树人关我鲁迅什么事",
+      "湖人总冠军",
+      "我一句话都没说过",
+      "我没说过这话，不过确实在理",
+      "我一般不惹事，一旦惹了，那都不叫事，叫新闻",
+      "陈独秀同学说得在理",
+      "陈独秀同学，你又挡到我了",
+      "原名李大钊，浙江周树人"
+    ],
+    currentSaying:""
   },
 
   /**
@@ -15,13 +27,18 @@ Page({
    */
   onLoad: function(options) {
     app.getUserInfoData().then((res) => {
+      console.log(res)
       this.setData({
-        userInfo:res.userInfo
+        userInfo:res.userInfo,
+        openId:res.openid
       })
     })
-    console.log("profile load and globalData",app.globalData)
+
+    let randomIndex=Math.floor(Math.random()*this.data.luxunSaying.length)
+
     this.setData({
-      totalUnreadMessage:app.globalData.totalUnreadMessage
+      totalUnreadMessage:app.globalData.totalUnreadMessage||0,
+      currentSaying: this.data.luxunSaying[randomIndex]
     })
   },
 
@@ -37,8 +54,9 @@ Page({
    */
   onShow: function() {
     console.log("show")
-    app.globalData.userInfo && this.setData({
-      userInfo: app.globalData.userInfo
+    this.setData({
+      userInfo: app.globalData.userInfo||{},
+      totalUnreadMessage: app.globalData.totalUnreadMessage || 0,
     })
   },
 
@@ -75,6 +93,11 @@ Page({
    */
   onShareAppMessage: function() {
 
+  },
+  handleToUserCenter(){
+    wx.navigateTo({
+      url: `./../userCenter/userCenter?userId=${this.data.openId}`,
+    })
   },
   handleLogin(){
     wx.navigateTo({

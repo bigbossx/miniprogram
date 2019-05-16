@@ -21,7 +21,8 @@ Page({
     isCollected: false,
     commentValue:"",
     commentType:"comment",
-    replyId:""
+    replyId:"",
+    commentFocus:false
   },
 
   /**
@@ -87,18 +88,32 @@ Page({
     })
   },
   handleCommentChange(event){
+    // console.log(event.detail.value)
     this.setData({
-      commentValue: event.detail.detail.value
+      commentValue: event.detail.value
+    })
+  },
+  handleCommentBlur(){
+    this.setData({
+      commentFocus:false,
+      commentType: "comment",
     })
   },
   handleReply(event){
-    console.log(event.currentTarget.detail.replyId)
+    console.log(event.currentTarget.dataset.replyid)
     this.setData({
       commentType:"reply",
-      replyId:event.currentTarget.detail.replyId
+      commentFocus:true,
+      replyId: event.currentTarget.dataset.replyid
     })
   },
   handleCommentSend(){
+    if(!this.data.commentValue){
+      return false
+    }
+    wx.showLoading({
+      title: '',
+    })
     let commentData={
       commentType:this.data.commentType,
       userinfo:{
@@ -118,10 +133,27 @@ Page({
         replyId:this.data.replyId
       },
       success: res => {
-        console.log(res)
+        this.setData({
+          pageData:res.result.data,
+          commentValue:""
+        })
+      },
+      fail:e=>{
+        console.log(e)
+        wx.showToast({
+          title: e,
+        })
+      },
+      complete:()=>{
+        this.setData({
+          commentType: "comment",
+          commentFocus: false
+        })
+        wx.hideLoading()
       }
     })
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

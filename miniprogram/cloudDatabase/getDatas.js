@@ -35,6 +35,7 @@ function queryFilterGoods(data) {
     // 分页查询goods
     db.collection(data.dataBase).where(findQuery).count().then((totalRes) => {
       db.collection(data.dataBase).where(findQuery)
+        .orderBy("createTime","desc")
         .skip((data.page - 1) * data.pageSize)
         .limit(data.pageSize)
         // .orderBy('date', 'desc')
@@ -66,6 +67,7 @@ function queryGoods(data) {
       db.collection(data.dataBase).where({
           ...data.where
         })
+        .orderBy("createTime", "desc")
         .skip((data.page - 1) * data.pageSize)
         .limit(data.pageSize)
         // .orderBy('date', 'desc')

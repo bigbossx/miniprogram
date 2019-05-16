@@ -38,8 +38,8 @@ Page({
    */
   onShow: function() {
     this.setData({
-      categoryType: app.globalData.categorySelectedType,
-      categoryValue: app.globalData.categorySelectedValue
+      categoryType: app.globalData.categorySelectedType||"",
+      categoryValue: app.globalData.categorySelectedValue||""
     })
   },
 
