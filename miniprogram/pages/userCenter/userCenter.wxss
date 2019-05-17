@@ -12,6 +12,7 @@
   */
   /* background: url("https://h1.ioliu.cn/bing/AthabascaCave_EN-AU0628983693_1920x1080.jpg"); */
   /* background-size: cover; */
+  background: #000;
   height: 350rpx;
   display: flex;
   justify-content: center;

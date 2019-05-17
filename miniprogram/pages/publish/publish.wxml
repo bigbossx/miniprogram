@@ -10,7 +10,7 @@
         <view class="weui-uploader__input" bindtap="chooseImage"></view>
       </view>
       <view class="weui-uploader__file uploader__img_box" wx:for="{{selectedImages}}" wx:for-index="idx" wx:key="idx">
-        <image class="weui-uploader__img " src="{{item}}" bindtap='previewImage' data-currenturl="{{item}}" mode="scaleToFill" />
+        <image class="weui-uploader__img " src="{{item}}" bindtap='previewImage' data-currenturl="{{item}}" mode="aspectFit" />
         <i-icon type="delete" size="28" color="#8c8c8c" class='close-btn' bindtap='deleteHandle' data-index='index' />
       </view>
     </i-cell>

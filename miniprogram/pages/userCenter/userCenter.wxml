@@ -1,5 +1,5 @@
 <!--miniprogram/pages/userCenter/userCenter.wxml-->
-<view class="UCenter-bg bg-gradual-orange">
+<view class="UCenter-bg">
   <image src='{{currentbackground}}' mode='scaleToFill' class="background-picture"></image>
   <view class="cu-avatar xl round" style="background-image:url({{userInfo.avatarUrl}});"></view>
   <view class="text-xl">{{userInfo.nickName}}
