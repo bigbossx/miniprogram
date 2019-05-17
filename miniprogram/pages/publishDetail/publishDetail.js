@@ -163,8 +163,8 @@ Page({
       wx.showToast({
         title: '发布成功',
       })
-      wx.switchTab({
-        url: '/pages/index/index',
+      wx.navigateTo({
+        url: `./../../pages/goodsDetail/goodsDetail?id=${this.data.id}`
       })
     }).catch((err)=>{
       wx.showToast({

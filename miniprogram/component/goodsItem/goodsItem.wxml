@@ -1,7 +1,7 @@
 <!--component/goodsItem/goodsItem.wxml-->
 <view class="goods__list_item skeleton" data-id="{{data._id}}" bindtap='onItemPress'>
   <view class="list__item_header">
-    <view class="avatar">
+    <view class="avatar" catchtap='handleToUserCenter' data-userid="{{data._openid}}">
       <i-avatar class="skeleton-radius" src="{{data.avatarUrl}}" size="small"></i-avatar>
       <text class='name skeleton-rect'>{{data.nickName}}</text>
     </view>
@@ -23,6 +23,16 @@
       </view>
       <text class="time skeleton-rect">{{formatModule.format.formatDateFunc(data.createTime)}}</text>
     </view>
+  </view>
+  <view class='list__item_other' wx:if="{{ifObtainedBtnCanShow}}">
+    <i-button catchtap="handleClickObtainer" data-id="{{data._id}}" type="warning" shape="circle" size="small" >下架商品</i-button>
+  </view>
+  <view class='goods-item-layout' wx:if="{{data.status==='sold'}}">
+    <i-button inline type="primary" disabled>已出售</i-button>
+  </view>
+  <view class='goods-item-layout' wx:if="{{data.status==='pending'}}">
+    <i-button catchtap="handleContinuePublish" data-id="{{data._id}}" wx:if="{{!data.money}}" inline type="warning">继续发布</i-button>
+    <i-button catchtap="handleRepublish" data-id="{{data._id}}" wx:if="{{data.money}}" inline type="warning">重新上架</i-button>
   </view>
 </view>
 <wxs module="formatModule" src="./../../filter/format.wxs"></wxs>
