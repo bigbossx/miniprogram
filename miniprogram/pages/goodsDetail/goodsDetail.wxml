@@ -136,6 +136,6 @@
   </view>
 </view>
 <i-message id="message" />
-<pay-panel isShow="{{isPayPanelShow}}" password="{{password}}" bind:hidePanel="handlePayPanelHide" bind:handleChange="handlePayPanelChange"></pay-panel>
+<pay-panel isShow="{{isPayPanelShow}}" money="{{pageData.money}}" password="{{password}}" bind:hidePanel="handlePayPanelHide" bind:handleChange="handlePayPanelChange"></pay-panel>
 <skeleton wx:if="{{showSkeleton}}"></skeleton>
 <wxs module="formatModule" src="./../../filter/format.wxs"></wxs>

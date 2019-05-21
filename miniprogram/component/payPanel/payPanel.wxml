@@ -10,10 +10,10 @@
     </view>
     <view class='content'>
       <view class="seller">
-        美团点评
+        VX科技
       </view>
       <view class="money">
-        <span>¥{{"16.80"}}</span>
+        <span>¥{{money}}</span>
       </view>
       <view class='pay-style'>
         <view>
