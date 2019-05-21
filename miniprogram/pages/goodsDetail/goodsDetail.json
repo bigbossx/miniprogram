@@ -8,6 +8,8 @@
     "i-input": "./../../iview/dist/input/index",
     "i-button": "./../../iview/dist/button/index",
     "i-icon": "./../../iview/dist/icon/index",
-    "skeleton": "./../../component/skeleton/skeleton"
+    "skeleton": "./../../component/skeleton/skeleton",
+    "pay-panel":"./../../component/payPanel/payPanel",
+    "i-message": "./../../iview/dist/message/index"
   }
 }

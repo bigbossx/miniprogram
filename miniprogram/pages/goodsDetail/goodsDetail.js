@@ -2,6 +2,7 @@
 import regeneratorRuntime from "./../../util/regenerator-runtime/runtime.js"
 const CloudFuncGet = require("./../../cloudDatabase/getDatas.js")
 const CloudFunc = require("./../../cloudDatabase/operateDatas.js")
+const { $Message } = require('../../iview/dist/base/index');
 const app = getApp()
 
 Page({
@@ -22,7 +23,9 @@ Page({
     commentValue:"",
     commentType:"comment",
     replyId:"",
-    commentFocus:false
+    commentFocus:false,
+    password:[],
+    isPayPanelShow:false,
   },
 
   /**
@@ -153,6 +156,43 @@ Page({
       }
     })
   },
+  handleWechatPay(){
+    console.log("pay")
+    this.setData({
+      isPayPanelShow:true
+    })
+  },
+  handlePayPanelHide(event){
+    this.setData({
+      isPayPanelShow:false
+    })
+    $Message({
+      content: '取消支付',
+      type: 'warning'
+    });
+  },
+  handlePayPanelChange(event){
+    console.log(event.detail.inputValue)
+    this.setData({
+      password: event.detail.inputValue.split("")
+    })
+    if (event.detail.inputValue.length>=6){
+      this.setData({
+        isPayPanelShow: false
+      })
+      wx.showLoading({
+        title: '',
+      })
+      new Promise((resolve)=>{
+        setTimeout(()=>{
+          this.setData({
+            password:[]
+          })
+          wx.hideLoading()
+        },2000)
+      })
+    }
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -276,6 +316,7 @@ Page({
   onShareAppMessage: function() {
 
   },
+
   previewImage(event) {
     const currentPreviewUrl = event.currentTarget.dataset.currentUrl
     wx.previewImage({

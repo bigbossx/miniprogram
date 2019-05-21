@@ -124,10 +124,18 @@
     </button>
   </view>
   <view class="flex-3">
-    <button class="flex-column button-transparent backgroundMoneyRed">
+    <button class="flex-column button-transparent backgroundMoneyRed" wx:if='{{pageData.status==="published"}}' bindtap='handleWechatPay'>
       <text style='line-height:100rpx'>立刻交易</text>
+    </button>
+    <button class="flex-column button-transparent" disabled wx:if='{{pageData.status==="pending"}}'>
+      <text style='line-height:100rpx'>已下架</text>
+    </button>
+    <button class="flex-column button-transparent" disabled wx:if='{{pageData.status==="sold"}}'>
+      <text style='line-height:100rpx'>已卖出</text>
     </button>
   </view>
 </view>
+<i-message id="message" />
+<pay-panel isShow="{{isPayPanelShow}}" password="{{password}}" bind:hidePanel="handlePayPanelHide" bind:handleChange="handlePayPanelChange"></pay-panel>
 <skeleton wx:if="{{showSkeleton}}"></skeleton>
 <wxs module="formatModule" src="./../../filter/format.wxs"></wxs>

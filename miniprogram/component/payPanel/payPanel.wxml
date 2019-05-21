@@ -1,0 +1,43 @@
+<!--component/payPanel/payPanel.wxml-->
+<text>{{isPayPanelShow}}</text>
+<view class="cu-modal custom-modal {{isShow?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="title">请输入支付密码</view>
+      <view class="action" bindtap="hideModal">
+        <i-icon type="close" size="16" color="#80848f" />
+      </view>
+    </view>
+    <view class='content'>
+      <view class="seller">
+        美团点评
+      </view>
+      <view class="money">
+        <span>¥{{"16.80"}}</span>
+      </view>
+      <view class='pay-style'>
+        <view>
+          <i-icon size='20' type="financial_fill" color="#a9a70e" />
+          零钱
+        </view>
+        <i-icon type="enter" />
+      </view>
+      <view class="custom-input" bindtap='handleFocus'>  
+        <input id='custom-input' value='{{value}}' type="number" focus='{{isShow}}' maxlength="{{6}}" bindinput='inputChange'></input>
+        <label for="custom-input">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li style="border-right:none"></li>
+            <div class="hide-password">
+              <span wx:for="{{password}}" wx:key="{{index}}">·</span>
+            </div>
+          </ul>
+        </label>
+      </view>
+    </view>
+  </view>
+</view>
