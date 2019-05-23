@@ -181,6 +181,7 @@ Page({
     })
     let data={
       _openId: this.data.userData._openid,
+      ownerId:this.data.pageData._openid,
       goodId:this.data.id,
       userInfo:{
         openId:this.data.userData._openid,

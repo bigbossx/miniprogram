@@ -68,7 +68,7 @@
     </view>
     <view class="order-status">
       <i-rate 
-          bind:change="onRateChange" 
+          disabled
           value="{{item.rate}}" 
           size="20">
       </i-rate>

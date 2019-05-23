@@ -35,7 +35,9 @@ Page({
       page:1
     },
     pageSize:10,
-    showLoadMore:false
+    showLoadMore:false,
+    rateValue:0,
+    rateOriginValue:0
   },
 
   /**
@@ -71,6 +73,19 @@ Page({
           })
           this.setData({
             userInfo: res.result,
+          })
+        }
+      })
+      wx.cloud.callFunction({
+        name: 'averageRate',
+        data: {
+          userId: this.data.userId
+        },
+        success: res => {
+          console.log(res)
+          this.setData({
+            rateValue: Math.ceil(res.result),
+            rateOriginValue:res.result
           })
         }
       })

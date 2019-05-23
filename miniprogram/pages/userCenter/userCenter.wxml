@@ -2,8 +2,16 @@
 <view class="UCenter-bg">
   <image src='{{currentbackground}}' mode='scaleToFill' class="background-picture"></image>
   <view class="cu-avatar xl round" style="background-image:url({{userInfo.avatarUrl}});"></view>
-  <view class="text-xl">{{userInfo.nickName}}
+  <view class="text-xl">{{userInfo.nickName}}</view>
+  <view class='flex-center'>
+    <i-rate 
+        disabled
+        value="{{rateValue}}" 
+        size="20">
+    </i-rate>
+    <text class='text-yellow text-bold'>{{rateOriginValue||"暂无评分"}}</text>
   </view>
+  
   <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
 </view>
 <i-tabs current="{{ currentTab }}" color="#ffd84d" bindchange="handleChange">
