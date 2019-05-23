@@ -156,6 +156,71 @@ Page({
       }
     })
   },
+  async handleObtainedOrRepublish(id, type) {
+    try {
+      wx.showLoading({
+        title: '',
+      })
+      let res = await wx.cloud.callFunction({
+        name: 'shelfOrObtainedGood',
+        data: {
+          id,
+          type
+        }
+      })
+      console.log(res)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      wx.hideLoading()
+    }
+  },
+  createOrder(){
+    wx.showLoading({
+      title: '创建订单中',
+    })
+    let data={
+      _openId: this.data.userData._openid,
+      goodId:this.data.id,
+      userInfo:{
+        openId:this.data.userData._openid,
+        nickName:this.data.userData.nickName,
+        avatarUrl:this.data.userData.avatarUrl
+      },
+      goodInfo:{
+        totalmoney: this.data.pageData.money,
+        name: this.data.pageData.name,
+        image:this.data.pageData.images[0],
+        methods: this.data.pageData.shippingMethods
+      },
+      addressInfo:this.data.userData.address[0],
+      create_time:new Date().getTime(),
+      status:"unreceipt",
+      rate:0
+    }
+    wx.cloud.callFunction({
+      name:"createOrder",
+      data:{
+        data
+      },
+      success:async (res)=>{
+        await this.handleObtainedOrRepublish(this.data.id,"sold")
+        console.log(res)
+        wx.navigateTo({
+          url: './../order/order',
+        })
+      },
+      fail:(e)=>{
+        console.log(e)
+        wx.showToast({
+          title: '异常错误',
+        })
+      },
+      complete:()=>{
+        wx.hideLoading()
+      }
+    })
+  },
   handleWechatPay(){
     console.log("pay")
     this.setData({
@@ -189,6 +254,11 @@ Page({
             password:[]
           })
           wx.hideLoading()
+          $Message({
+            content: '支付成功',
+            type: 'success'
+          });
+          this.createOrder()
         },2000)
       })
     }

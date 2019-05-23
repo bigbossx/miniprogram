@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "订单",
+  "usingComponents": {
+    "i-tabs": "./../../iview/dist/tabs/index",
+    "i-tab": "./../../iview/dist/tab/index",
+    "i-modal": "./../../iview/dist/modal/index",
+    "i-rate": "./../../iview/dist/rate/index"
+  }
+}

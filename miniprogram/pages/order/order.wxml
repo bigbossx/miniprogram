@@ -1,0 +1,102 @@
+<!--miniprogram/pages/order/order.wxml-->
+<i-tabs current="{{ currentTab }}" color="#ffd84d" bindchange="handleChange">
+    <i-tab key="unreceipt" title="待收货"></i-tab>
+    <i-tab key="wait_rate" title="待评价"></i-tab>
+    <i-tab key="completed" title="已完成"></i-tab>
+</i-tabs>
+<view class="order__list_container bg-white" wx:if="{{currentTab==='unreceipt'}}" wx:for="{{unreceipt.goodsData}}" wx:key="{{item._id}}" style="border-bottom:{{unreceipt.goodsData.length-1===index?'none':'16rpx solid #f5f5f5'}}">
+  <view class='order-header flex-between p-3'>
+    <view class='order-createInfo'>
+      <text>订单编号 {{item.create_time}}</text>
+      <text>成交时间 {{formatModule.format.formatDateFunc(item.create_time)}}</text>
+    </view>
+    <view class="order-status">
+      <text class='cu-btn round-5 bg-red text-white' data-id="{{item._id}}" bindtap='handleComfirmReceipt'>确认收货</text>
+    </view>
+  </view>
+  <view class='order-main p-3 border-top-1 border-bottom-1'>
+    <image class="cu-avatar xl" src='{{item.goodInfo.image}}'></image>
+    <view class='order-goodInfo flex-1'>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品名称:{{item.goodInfo.name}}</text>
+        <text>¥{{item.goodInfo.totalmoney}}</text>
+      </view>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品数量</text>
+        <text>x1</text>
+      </view>
+    </view>
+  </view>
+  <view class='order-footer flex-end p-3'>
+    <text>合计：<text class='text-red'>¥{{item.goodInfo.totalmoney}}</text></text>
+  </view>
+</view>
+
+<view class="order__list_container bg-white" wx:if="{{currentTab==='wait_rate'}}" wx:for="{{wait_rate.goodsData}}" wx:key="{{item._id}}" style="border-bottom:{{unreceipt.goodsData.length-1===index?'none':'16rpx solid #f5f5f5'}}">
+  <view class='order-header flex-between p-3'>
+    <view class='order-createInfo'>
+      <text>订单编号 {{item.create_time}}</text>
+      <text>成交时间 {{formatModule.format.formatDateFunc(item.create_time)}}</text>
+    </view>
+    <view class="order-status">
+      <text class='cu-btn round-5 bg-yellow text-white' data-id='{{item._id}}' bindtap='onShowRateModal'>评分</text>
+    </view>
+  </view>
+  <view class='order-main p-3 border-top-1 border-bottom-1'>
+    <image class="cu-avatar xl" src='{{item.goodInfo.image}}'></image>
+    <view class='order-goodInfo flex-1'>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品名称:{{item.goodInfo.name}}</text>
+        <text>¥{{item.goodInfo.totalmoney}}</text>
+      </view>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品数量</text>
+        <text>x1</text>
+      </view>
+    </view>
+  </view>
+  <view class='order-footer flex-end p-3'>
+    <text>合计：<text class='text-red'>¥{{item.goodInfo.totalmoney}}</text></text>
+  </view>
+</view>
+
+<view class="order__list_container bg-white" wx:if="{{currentTab==='completed'}}" wx:for="{{completed.goodsData}}" wx:key="{{item._id}}" style="border-bottom:{{unreceipt.goodsData.length-1===index?'none':'16rpx solid #f5f5f5'}}">
+  <view class='order-header flex-between p-3'>
+    <view class='order-createInfo'>
+      <text>订单编号 {{item.create_time}}</text>
+      <text>成交时间 {{formatModule.format.formatDateFunc(item.create_time)}}</text>
+    </view>
+    <view class="order-status">
+      <i-rate 
+          bind:change="onRateChange" 
+          value="{{item.rate}}" 
+          size="20">
+      </i-rate>
+    </view>
+  </view>
+  <view class='order-main p-3 border-top-1 border-bottom-1'>
+    <image class="cu-avatar xl" src='{{item.goodInfo.image}}'></image>
+    <view class='order-goodInfo flex-1'>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品名称:{{item.goodInfo.name}}</text>
+        <text>¥{{item.goodInfo.totalmoney}}</text>
+      </view>
+      <view class='order-goodInfo-item flex-between'>
+        <text>商品数量</text>
+        <text>x1</text>
+      </view>
+    </view>
+  </view>
+  <view class='order-footer flex-end p-3'>
+    <text>合计：<text class='text-red'>¥{{item.goodInfo.totalmoney}}</text></text>
+  </view>
+</view>
+<i-modal title="给一个好评吧！" visible="{{ isRateModalShow }}" actions="{{actions}}" action-mode="{{ vertical }}" bind:click="handleRate">
+   <i-rate 
+        bind:change="onRateChange" 
+        value="{{rateValue}}" 
+        size="32">
+    </i-rate>
+</i-modal>
+<i-load-more loading="{{ showLoadMore }}" />
+<wxs module="formatModule" src="./../../filter/format.wxs"></wxs>

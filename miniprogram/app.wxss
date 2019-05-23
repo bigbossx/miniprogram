@@ -243,6 +243,10 @@
   color: #80848f;
 }
 
+.round-5{
+  border-radius: 10rpx;
+}
+
 /* 解决skeleton没有渲染高度的问题 */
 
 .minHeight {

@@ -7,6 +7,9 @@
 </i-panel>
 <i-panel title="" i-class="mt-6">
   <i-cell-group>
+    <i-cell title="我的订单" is-link url="/pages/order/order">
+      <i-icon type="service_fill" slot="icon" />
+    </i-cell>
     <i-cell title="我的收藏" is-link url="/pages/collection/collection">
       <i-icon type="collection_fill" slot="icon" />
     </i-cell>

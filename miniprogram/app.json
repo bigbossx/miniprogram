@@ -19,7 +19,8 @@
     "pages/goodsList/goodsList",
     "pages/chat/chat",
     "pages/message/message",
-    "pages/userCenter/userCenter"
+    "pages/userCenter/userCenter",
+    "pages/order/order"
   ],
   "window": {
     "backgroundColor": "#fdd7e2",

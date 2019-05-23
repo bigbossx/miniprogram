@@ -110,7 +110,16 @@ Page({
   async onPullDownRefresh() {
     try {
       wx.showNavigationBarLoading()
-      await this.getGoodsData()
+      await this.setData({
+        page:1
+      })
+      let res=await this.getGoodsData()
+      await this.setData({
+        goodsData: res.data,
+        total: res.total,
+        totalPage: res.totalPage,
+        showSkeleton: false
+      })
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
     } catch (e) {

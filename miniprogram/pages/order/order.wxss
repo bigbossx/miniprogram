@@ -1,0 +1,20 @@
+/* miniprogram/pages/order/order.wxss */
+.order__list_container{
+  border-bottom: 16rpx solid #f5f5f5;
+}
+.order-createInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.order-main{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.order-goodInfo{
+  padding:0 30rpx;
+  align-items: flex-start;
+  justify-content: flex-start
+}

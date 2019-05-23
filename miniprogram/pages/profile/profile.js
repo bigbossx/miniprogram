@@ -27,7 +27,6 @@ Page({
    */
   onLoad: function(options) {
     app.getUserInfoData().then((res) => {
-      console.log(res)
       this.setData({
         userInfo:res.userInfo,
         openId:res.openid

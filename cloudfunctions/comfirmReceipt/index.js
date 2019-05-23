@@ -8,25 +8,19 @@ exports.main = async (event, context) => {
   try {
     console.log(event)
     let { id, type } = event
-    if (type=== "obtained") {
-      await db.collection("xianyu_goods").doc(id).update({
+    if (type === "receipt") {
+      await db.collection("xianyu_order").doc(id).update({
         data: {
-          status: "pending"
+          status: "wait_rate"
         }
       })
-    } else if (type === "sold"){
-      await db.collection("xianyu_goods").doc(id).update({
+    }else if(type==="rate"){
+      await db.collection("xianyu_order").doc(id).update({
         data: {
-          status: "sold"
+          status: "completed"
         }
       })
-    }else {
-      await db.collection("xianyu_goods").doc(id).update({
-        data: {
-          status: "published"
-        }
-      })
-    }
+    } 
 
   } catch (e) {
     console.error(e)
