@@ -1,12 +1,21 @@
 
-# 云开发 quickstart
+# 云开发模式的小程序demo 
+看到有人fork的，所以还是完善一下。稍微搞一搞。
 
-这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
+### 首先是一些完成的效果
+![image](https://github.com/VisonM/miniprogram/master/gif/ezgif-1-84c837c7a346.gif)
 
-- 数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 文档型数据库
-- 文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
-- 云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码
+![image](https://github.com/VisonM/miniprogram/master/gif/ezgif-1-654c164131ae.gif)
 
-## 参考文档
+![image](https://github.com/VisonM/miniprogram/master/gif/ezgif-1-d601cf33f5e7.gif)
 
-- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
+> 跑这个项目的话。本地没有数据库的话，所以可能卡在某个地方。因为这是很早的项目了，云开发刚出来就做了。所以踩坑了，有些地方有点乱，也不打算整理。
+
+
+### 一些踩坑建议
+
+- 不知道现在云开发的更新近况。但是云开发其实提供了客户端直接操作数据库的能力。但是权限很低。所以，尽量不要去用客户端直接写入数据库。不然数据更新或者获取有问题他没报错，就裂开了。你不能改别人添加的数据。尽管这是你的数据库。
+- 把云函数当作后端接口去用。
+- 这小程序的实时聊天是用leancloud的即时通讯服务
+  
+
